@@ -1,5 +1,5 @@
 //Components
-import { 
+import {
 	Logo,
 	ProfileIcon,
 	ListIcon,
@@ -10,7 +10,6 @@ import {
 import style from './app-header.module.css'
 
 const AppHeader = () => {
-
 	return (
 		<header className={style.header} >
 			<div className={style.wrapper}>
@@ -18,7 +17,7 @@ const AppHeader = () => {
 					<div className={style.blockLinks}>
 						<a href="#" className={style.link}>
 							<BurgerIcon type="primary" />
-							<p className={`text text_type_main-default ml-2`}>Конструктор</p>
+							<p className="text text_type_main-default ml-2">Конструктор</p>
 						</a>
 
 						<a href="#" className={`${style.link} ${style.active} p-4`}>

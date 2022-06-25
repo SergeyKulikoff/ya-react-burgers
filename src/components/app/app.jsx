@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { v4 as uuidv4 } from 'uuid';
 //Components
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -18,9 +18,9 @@ const App = () => {
 		sauce: []
 	}
 
-	ingredients.forEach(elem => ingredientType[elem.type].push(elem));
 
-	const [ingredient, setIngredients] = useState(ingredientType);
+
+	ingredients.forEach(elem => ingredientType[elem.type].push(elem));
 
 	return (
 		<div className="App">
@@ -33,6 +33,7 @@ const App = () => {
 						bun={ingredientType.bun}
 						main={ingredientType.main}
 						sauce={ingredientType.sauce}
+
 					/>
 					<BurgerConstructor
 						bun={ingredientType.bun}

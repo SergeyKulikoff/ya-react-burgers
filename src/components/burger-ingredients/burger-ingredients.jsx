@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 //Components
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,7 +9,7 @@ import IngredientCard from "../ingredinet-card/ingredient-card";
 import style from './burger-ingredients.module.css'
 
 const BurgerIngredients = (props) => {
-	const [current, setCurrent] = React.useState('one')
+	const [current, setCurrent] = React.useState('one');
 
 	return (
 		<section>
@@ -28,7 +29,6 @@ const BurgerIngredients = (props) => {
 				<div className={style.ingredientBox}>
 					<div className={style.headline}>Булки</div>
 					{props.bun.map((elem, index) => {
-						console.log(elem)
 						return (
 							<IngredientCard
 								key={index}
@@ -44,7 +44,6 @@ const BurgerIngredients = (props) => {
 				<div className={style.ingredientBox}>
 					<div className={style.headline}>Соусы</div>
 					{props.sauce.map((elem, index) => {
-						console.log(elem)
 						return (
 							<IngredientCard
 								key={index}
@@ -60,7 +59,6 @@ const BurgerIngredients = (props) => {
 				<div className={style.ingredientBox}>
 					<div className={style.headline}>Начинки</div>
 					{props.main.map((elem, index) => {
-						console.log(elem)
 						return (
 							<IngredientCard
 								key={index}
@@ -73,9 +71,15 @@ const BurgerIngredients = (props) => {
 					})}
 				</div>
 			</div>
-
-
 		</section>
 	)
 }
+
 export default BurgerIngredients
+
+
+BurgerIngredients.propTypes = {
+	bun: PropTypes.arrayOf(PropTypes.object).isRequired,
+	main: PropTypes.arrayOf(PropTypes.object).isRequired,
+	sauce: PropTypes.arrayOf(PropTypes.object).isRequired
+}
