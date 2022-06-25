@@ -1,16 +1,15 @@
-
 //Components
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes, { string } from 'prop-types';
 
 //Style
 import style from './ingredient-card.module.css';
 
 const IngredientCard = (props) => {
-
     return (
         <div className={style.item}>
             <div className={style.image}>
-                <img src={props.image} alt="" />
+                <img src={props.image} alt="Здесь должно быть изображение булки" />
             </div>
 
             <div className={style.price}>
@@ -24,3 +23,9 @@ const IngredientCard = (props) => {
     )
 }
 export default IngredientCard;
+
+IngredientCard.propTypes = {
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+}

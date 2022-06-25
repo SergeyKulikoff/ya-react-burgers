@@ -6,14 +6,13 @@ import {
 	DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import PropTypes from 'prop-types';
 //Style
 import style from './burger-constructor.module.css'
 
 const BurgerConstructor = (props) => {
-
 	return (
 		<section>
-
 			{props.bun.map((elem, index) => {
 				if (index !== 1) {
 					return (
@@ -29,7 +28,6 @@ const BurgerConstructor = (props) => {
 								/>
 							</div>
 
-
 							{<div className={style.listIngredients}>
 								{props.main.concat(props.sauce).map((elem, index) => {
 									return (
@@ -44,8 +42,8 @@ const BurgerConstructor = (props) => {
 										</div>
 									)
 								})}
-
-							</div>}
+							</div>
+							}
 
 							<div className={style.bottom} key={index + 1}>
 								<ConstructorElement
@@ -78,3 +76,9 @@ const BurgerConstructor = (props) => {
 }
 
 export default BurgerConstructor
+
+BurgerConstructor.propTypes = {
+	bun: PropTypes.arrayOf(PropTypes.object).isRequired,
+	main: PropTypes.arrayOf(PropTypes.object).isRequired,
+	sauce: PropTypes.arrayOf(PropTypes.object).isRequired
+}
