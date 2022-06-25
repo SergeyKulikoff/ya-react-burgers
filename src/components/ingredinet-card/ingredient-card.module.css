@@ -1,0 +1,41 @@
+.item{
+	width: 272px;
+	height: 208px;
+	text-align: center;
+	margin: 24px 16px 40px 16px;
+	box-sizing: border-box;
+}
+
+.item p{
+	margin-bottom: 24px;
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.item .image{
+	padding: 0px 16px;
+}
+
+.image img{
+	width: 100%;
+	height: auto;
+}
+
+.item .price{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px 0px;
+	font-family: 'Iceland';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 28px;
+	line-height: 24px;
+}
+
+.item .price svg{
+	margin-left: 8px;
+}

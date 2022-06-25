@@ -1,0 +1,23 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+main{
+	max-width: 1280px;
+	margin: 0 auto;
+}
+
+section{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 50%
+}
+
+.container{
+	display: flex;
+	justify-content: space-between;
+	margin-top:4px ;
+}
+

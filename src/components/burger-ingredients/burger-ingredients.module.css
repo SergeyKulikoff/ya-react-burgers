@@ -1,0 +1,38 @@
+.tabsBox{
+	display: flex;
+	margin-bottom: 40px;
+}
+
+.headline{
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 30px;
+	width: 100%;
+}
+
+.ingredientBox{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.content{
+	max-height:550px;
+	overflow-x: hidden;
+}
+
+.content::-webkit-scrollbar {
+	width: 12px;
+}
+
+.content::-webkit-scrollbar-track {
+	background: #2F2F37;
+}
+
+.content::-webkit-scrollbar-thumb {
+	background: #8585AD;
+	border: 3px solid #2F2F37;
+	border-radius: 6px;
+}

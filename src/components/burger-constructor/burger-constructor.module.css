@@ -1,0 +1,64 @@
+.totalprice{
+	display: flex;
+	align-items: center;
+	font-family: 'Iceland';
+	font-style: normal;
+	font-size: 48px;
+	line-height: 36px;
+}
+
+.totalprice svg{
+	margin: 0px 40px 0px 8px;
+}
+
+.checkout{
+	display: flex;
+	align-items: center;
+	justify-content: end;
+	margin: 40px 0px 50px 0px;
+}
+
+.listIngredients{
+	display: flex;
+	flex-direction: column;
+	max-width: 100%;
+	max-height: 400px;
+   overflow-x: hidden;
+}
+
+.top,
+.bottom{
+	display: flex;
+	justify-content: end;
+	margin-right: 20px;
+}
+
+.item{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 8px;
+}
+
+.item svg{
+	flex-basis: 75px;
+}
+
+.content{
+	max-height:550px;
+	overflow-x: hidden;
+}
+
+.listIngredients::-webkit-scrollbar {
+	width: 12px;
+}
+
+.listIngredients::-webkit-scrollbar-track {
+	background: #2F2F37;
+}
+
+.listIngredients::-webkit-scrollbar-thumb {
+	background: #8585AD;
+	border: 3px solid #2F2F37;
+	border-radius: 6px;
+}
