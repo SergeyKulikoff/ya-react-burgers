@@ -1,13 +1,16 @@
 //Components
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes, { string } from 'prop-types';
+
+//Types
+import PropTypes from 'prop-types';
 
 //Style
 import style from './ingredient-card.module.css';
 
-const IngredientCard = (props) => {
+export default function IngredientCard(props) {
+
     return (
-        <div className={style.item}>
+        <div className={style.item} onClick={() => props.click()}>
             <div className={style.image}>
                 <img src={props.image} alt="Здесь должно быть изображение булки" />
             </div>
@@ -22,7 +25,6 @@ const IngredientCard = (props) => {
         </div>
     )
 }
-export default IngredientCard;
 
 IngredientCard.propTypes = {
     image: PropTypes.string.isRequired,

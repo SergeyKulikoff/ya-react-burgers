@@ -1,26 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
 //Components
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
-//Data
-import { ingredients } from '../../utils/data.js';
-
 //Style
 import style from './app.module.css';
 
-const App = () => {
-	const ingredientType = {
-		bun: [],
-		main: [],
-		sauce: []
-	}
+export default function App() {
+	const URL = 'https://norma.nomoreparties.space/api/ingredients'
+	const [ingredientType, setIngredientType] = useState([]);
 
+	const [showMore, setShowMore] = useState(false);
 
-
-	ingredients.forEach(elem => ingredientType[elem.type].push(elem));
+	useEffect(() => {
+		fetch(URL)
+			.then(response => response.json())
+			.then(data => setIngredientType(data.data))
+			.catch(e => console.log('error'))
+	}, []);
 
 	return (
 		<div className="App">
@@ -30,15 +30,10 @@ const App = () => {
 
 				<div className={style.container}>
 					<BurgerIngredients
-						bun={ingredientType.bun}
-						main={ingredientType.main}
-						sauce={ingredientType.sauce}
-
+						ingredients={ingredientType}
 					/>
 					<BurgerConstructor
-						bun={ingredientType.bun}
-						main={ingredientType.main}
-						sauce={ingredientType.sauce}
+						ingredients={ingredientType}
 					/>
 				</div>
 			</main>
@@ -46,4 +41,3 @@ const App = () => {
 	);
 }
 
-export default App;

@@ -9,7 +9,7 @@ import {
 //Style
 import style from './app-header.module.css'
 
-const AppHeader = () => {
+export default function AppHeader() {
 	return (
 		<header className={style.header} >
 			<div className={style.wrapper}>
@@ -39,4 +39,4 @@ const AppHeader = () => {
 		</header>
 	)
 }
-export default AppHeader
+

@@ -4,6 +4,7 @@
 	text-align: center;
 	margin: 24px 16px 40px 16px;
 	box-sizing: border-box;
+	cursor: pointer;
 }
 
 .item p{
