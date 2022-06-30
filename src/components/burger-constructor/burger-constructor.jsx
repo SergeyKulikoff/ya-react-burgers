@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+//React hooks
+import { useState } from 'react';
 
 //Components
 import {
@@ -14,29 +15,28 @@ import OrderDetails from '../order-details/order-details';
 import PropTypes from 'prop-types';
 
 //Style
-import style from './burger-constructor.module.css'
+import style from './burger-constructor.module.css';
 
 export default function BurgerConstructor({ ingredients }) {
 	const bun = ingredients.filter(elem => elem.type === 'bun');
+
 	const sauce = ingredients.filter(elem => elem.type === 'sauce');
+
 	const main = ingredients.filter(elem => elem.type === 'main');
 
+	const closeModal = () => setOpenModal(!isActive);
 	const [isActive, setOpenModal] = useState(false);
-
-	let toggleShowHandler = () => {
-		setOpenModal(!isActive)
-	}
 
 	return (
 		<>
-			<section>
+			<section className={style.left}>
 				{bun.map((elem, index) => {
 					if (index !== 1) {
 						return (
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} key={index + 1}>
-								<div className={style.top} key={index + 2}>
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} key={index}>
+								<div className={style.top} key={elem._id}>
 									<ConstructorElement
-										key={index}
+										key={elem._id + 1}
 										type="top"
 										isLocked={true}
 										text={`${elem.name} (верх)`}
@@ -51,7 +51,7 @@ export default function BurgerConstructor({ ingredients }) {
 											<div className={style.item} key={index}>
 												<DragIcon />
 												<ConstructorElement
-													key={elem.id}
+													key={elem.id + 1}
 													text={elem.name}
 													price={elem.price}
 													thumbnail={elem.image}
@@ -83,21 +83,20 @@ export default function BurgerConstructor({ ingredients }) {
 						<CurrencyIcon type="primary " className="mr-2" />
 					</div>
 
-					<Button type="primary" size="large" onClick={toggleShowHandler}>
+					<Button type="primary" size="large" onClick={setOpenModal}>
 						Оформить заказ
 					</Button>
 				</div>
 			</section>
 
-			{isActive ?
-
+			{isActive && (
 				<Modal
-					isOpen={isActive}
+					title=''
+					isOpen={closeModal}
 				>
 					<OrderDetails />
 				</Modal>
-
-				: null}
+			)}
 		</>
 	)
 }

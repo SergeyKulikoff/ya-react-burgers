@@ -1,5 +1,11 @@
+//React hooks
 import { useState, useEffect } from 'react';
+
+//Libraries
 import { v4 as uuidv4 } from 'uuid';
+
+//Utils
+import { getIngredients } from '../../utils/get-api'
 
 //Components
 import AppHeader from '../app-header/app-header';
@@ -10,16 +16,12 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import style from './app.module.css';
 
 export default function App() {
-	const URL = 'https://norma.nomoreparties.space/api/ingredients'
-	const [ingredientType, setIngredientType] = useState([]);
-
-	const [showMore, setShowMore] = useState(false);
+	const [ingredients, setIngredientType] = useState([]);
 
 	useEffect(() => {
-		fetch(URL)
-			.then(response => response.json())
-			.then(data => setIngredientType(data.data))
-			.catch(e => console.log('error'))
+		getIngredients()
+			.then(setIngredientType)
+			.catch(() => alert("Во время загрузки данных произошла ошибка."))
 	}, []);
 
 	return (
@@ -30,10 +32,10 @@ export default function App() {
 
 				<div className={style.container}>
 					<BurgerIngredients
-						ingredients={ingredientType}
+						ingredients={ingredients}
 					/>
 					<BurgerConstructor
-						ingredients={ingredientType}
+						ingredients={ingredients}
 					/>
 				</div>
 			</main>
