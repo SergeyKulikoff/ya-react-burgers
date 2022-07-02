@@ -7,10 +7,9 @@ import IngredientCard from "../ingredinet-card/ingredient-card";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-
-
 //Types
 import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 
 //Style
 import style from './burger-ingredients.module.css'
@@ -106,6 +105,7 @@ export default function BurgerIngredients({ ingredients }) {
 					</div>
 				</div>
 			</section>
+
 			{
 				isActive && (
 					<Modal
@@ -121,5 +121,5 @@ export default function BurgerIngredients({ ingredients }) {
 }
 
 BurgerIngredients.propTypes = {
-	ingredients: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+	ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 }

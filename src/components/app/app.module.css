@@ -1,7 +1,6 @@
 *{
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 }
 
 html,
@@ -30,15 +29,12 @@ main{
 }
 
 section{
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	width: 50%
+	width:	calc(50% - 20px);
 }
 
 .container{
 	display: flex;
 	justify-content: space-between;
-	margin-top:4px ;
+	margin-top:4px;
 }
 

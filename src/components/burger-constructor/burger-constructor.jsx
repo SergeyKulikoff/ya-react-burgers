@@ -13,6 +13,7 @@ import OrderDetails from '../order-details/order-details';
 
 //Types
 import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 
 //Style
 import style from './burger-constructor.module.css';
@@ -102,5 +103,5 @@ export default function BurgerConstructor({ ingredients }) {
 }
 
 BurgerConstructor.propTypes = {
-	ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+	ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 }
