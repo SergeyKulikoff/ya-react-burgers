@@ -1,26 +1,28 @@
-import { useState } from 'react';
+//React hooks
+import { useState, useEffect } from 'react';
+
+//Libraries
 import { v4 as uuidv4 } from 'uuid';
+
+//Utils
+import { getIngredients } from '../../utils/get-api'
+
 //Components
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
-//Data
-import { ingredients } from '../../utils/data.js';
-
 //Style
 import style from './app.module.css';
 
-const App = () => {
-	const ingredientType = {
-		bun: [],
-		main: [],
-		sauce: []
-	}
+export default function App() {
+	const [ingredients, setIngredientType] = useState([]);
 
-
-
-	ingredients.forEach(elem => ingredientType[elem.type].push(elem));
+	useEffect(() => {
+		getIngredients()
+			.then(setIngredientType)
+			.catch(() => alert("Во время загрузки данных произошла ошибка."))
+	}, []);
 
 	return (
 		<div className="App">
@@ -30,15 +32,10 @@ const App = () => {
 
 				<div className={style.container}>
 					<BurgerIngredients
-						bun={ingredientType.bun}
-						main={ingredientType.main}
-						sauce={ingredientType.sauce}
-
+						ingredients={ingredients}
 					/>
 					<BurgerConstructor
-						bun={ingredientType.bun}
-						main={ingredientType.main}
-						sauce={ingredientType.sauce}
+						ingredients={ingredients}
 					/>
 				</div>
 			</main>
@@ -46,4 +43,3 @@ const App = () => {
 	);
 }
 
-export default App;

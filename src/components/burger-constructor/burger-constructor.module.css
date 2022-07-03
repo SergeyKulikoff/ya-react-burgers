@@ -40,10 +40,6 @@
 	margin: 8px;
 }
 
-.item svg{
-	flex-basis: 75px;
-}
-
 .content{
 	max-height:550px;
 	overflow-x: hidden;

@@ -1,13 +1,15 @@
 .item{
+	position: relative;
 	width: 272px;
 	height: 208px;
 	text-align: center;
 	margin: 24px 16px 40px 16px;
 	box-sizing: border-box;
+	cursor: pointer;
 }
 
 .item p{
-	margin-bottom: 24px;
+	/* margin-bottom: 24px; */
 	font-family: 'JetBrains Mono';
 	font-style: normal;
 	font-weight: 400;
@@ -34,6 +36,7 @@
 	font-weight: 400;
 	font-size: 28px;
 	line-height: 24px;
+	margin-bottom: 10px;
 }
 
 .item .price svg{
