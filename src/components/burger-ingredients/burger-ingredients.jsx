@@ -1,5 +1,6 @@
 //React hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,24 +8,28 @@ import IngredientCard from "../ingredinet-card/ingredient-card";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-//Types
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
+//Actions 
+import { getFetchData } from '../../services/actions/index';
+import { ingredientShowModal } from "../../services/actions";
 
 //Style
 import style from './burger-ingredients.module.css'
 
-export default function BurgerIngredients({ ingredients }) {
+export default function BurgerIngredients() {
+	const isActive = useSelector(state => state.isOpen);
+	const ingredients = useSelector(state => state.fetchData.ingredient);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getFetchData());
+
+	}, [dispatch]);
+
 	const [current, setCurrent] = useState('Булки');
 
 	const bun = ingredients.filter(elem => elem.type === 'bun');
-
 	const sauce = ingredients.filter(elem => elem.type === 'sauce');
-
 	const main = ingredients.filter(elem => elem.type === 'main');
-
-	const [isActive, setOpenModal] = useState(false);
-
 	const [selectIngredient, setSelectIingredient] = useState([])
 
 	const scrollTab = tab => {
@@ -35,8 +40,8 @@ export default function BurgerIngredients({ ingredients }) {
 	}
 
 	const onIngredientClick = id => {
+		dispatch(ingredientShowModal())
 		const selectID = ingredients.filter(elem => elem._id === id);
-		setOpenModal(!isActive)
 		setSelectIingredient(selectID)
 	}
 
@@ -58,6 +63,7 @@ export default function BurgerIngredients({ ingredients }) {
 				<div className={style.content}>
 					<div className={style.ingredientBox}>
 						<div className={style.headline} id="Булки">Булки</div>
+
 						{bun.map(elem => {
 							return (
 								<IngredientCard
@@ -66,6 +72,8 @@ export default function BurgerIngredients({ ingredients }) {
 									image={elem.image}
 									name={elem.name}
 									price={elem.price}
+									type={elem.type}
+									data={ingredients}
 									OnIngredientClick={onIngredientClick}
 								/>
 							)
@@ -82,6 +90,8 @@ export default function BurgerIngredients({ ingredients }) {
 									image={elem.image}
 									name={elem.name}
 									price={elem.price}
+									type={elem.type}
+									data={ingredients}
 									OnIngredientClick={onIngredientClick}
 								/>
 							)
@@ -98,6 +108,8 @@ export default function BurgerIngredients({ ingredients }) {
 									image={elem.image}
 									name={elem.name}
 									price={elem.price}
+									type={elem.type}
+									data={ingredients}
 									OnIngredientClick={onIngredientClick}
 								/>
 							)
@@ -107,7 +119,7 @@ export default function BurgerIngredients({ ingredients }) {
 			</section>
 
 			{
-				isActive && (
+				isActive.ingredientModal && (
 					<Modal
 						isOpen={onIngredientClick}
 						title={'Детали ингредиента'}
@@ -118,8 +130,4 @@ export default function BurgerIngredients({ ingredients }) {
 			}
 		</>
 	)
-}
-
-BurgerIngredients.propTypes = {
-	ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 }

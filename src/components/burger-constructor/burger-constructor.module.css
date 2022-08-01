@@ -21,9 +21,14 @@
 .listIngredients{
 	display: flex;
 	flex-direction: column;
-	max-width: 100%;
+	width: 620px;
 	max-height: 400px;
    overflow-x: hidden;
+	margin: 7.5px 0px;
+}
+
+.listIngredients ul{
+	width: 605px;
 }
 
 .top,
@@ -57,4 +62,20 @@
 	background: #8585AD;
 	border: 3px solid #2F2F37;
 	border-radius: 6px;
+}
+
+
+.drop_msg {
+    height: 40px;
+    text-align: center;
+}
+
+.no_drop_msg {
+    display:none;
+}
+
+.column_active{
+    border: 5px solid #3a3a47;
+    background-color: #1C1C21;
+    padding-top: 35px;
 }
