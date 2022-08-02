@@ -1,6 +1,3 @@
-//Libraries
-import { v4 as uuidv4 } from 'uuid';
-
 import { INGREDIENTS_DATA, INGREDIENTS_CHOOSE, INGREDIENT_DELETE, COUNTER_DECREASE, COUNTER_INCREASE, MOVE_INGREDIENT } from "../constants/actionTypes";
 
 const initialState = {
@@ -21,6 +18,7 @@ function fetchData(state = initialState, action) {
             }
 
         case INGREDIENTS_CHOOSE:
+            console.log(action)
             const item = action.payload;
             if (item.type === 'bun') {
                 return {
@@ -31,7 +29,7 @@ function fetchData(state = initialState, action) {
                     }
                 };
             } else {
-                const chosenItem = { ...item, productId: uuidv4() }
+                const chosenItem = { ...item, productId: action.productId}
                 return {
                     ...state,
                     burgerIngredients: {
@@ -55,7 +53,6 @@ function fetchData(state = initialState, action) {
         }
 
         case COUNTER_DECREASE: {
-            console.log(action)
             if (action.typeItem !== 'bun') {
                 return {
                     ...state,

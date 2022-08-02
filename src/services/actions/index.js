@@ -9,6 +9,9 @@ import {
 	MOVE_INGREDIENT
 } from "../constants/actionTypes";
 
+//Libraries
+import { v4 as uuidv4 } from 'uuid';
+
 export const constructorShowModal = () => ({
 	type: CONSTRUCTOR_MODAL
 })
@@ -24,7 +27,8 @@ export const ingredientGET = (data) => ({
 
 export const ingredientChoose = (item) => ({
 	type: INGREDIENTS_CHOOSE,
-	payload: item
+	payload: item,
+	productId: uuidv4()
 })
 
 export const ingredientDelete = (id) => ({
