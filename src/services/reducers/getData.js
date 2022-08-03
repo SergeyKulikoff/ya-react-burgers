@@ -1,4 +1,12 @@
-import { INGREDIENTS_DATA, INGREDIENTS_CHOOSE, INGREDIENT_DELETE, COUNTER_DECREASE, COUNTER_INCREASE, MOVE_INGREDIENT } from "../constants/actionTypes";
+import { 
+    INGREDIENTS_DATA,
+    INGREDIENTS_CHOOSE,
+    INGREDIENT_DELETE,
+    COUNTER_DECREASE,
+    COUNTER_INCREASE,
+    MOVE_INGREDIENT,
+    RESET_CONSTRUCTOR
+} from "../constants/actionTypes";
 
 const initialState = {
     ingredient: [],
@@ -17,8 +25,13 @@ function fetchData(state = initialState, action) {
                 ingredient: action.payload.data
             }
 
+        case RESET_CONSTRUCTOR:
+            return {
+                ...state,
+                burgerIngredients: initialState.burgerIngredients
+            };
+
         case INGREDIENTS_CHOOSE:
-            console.log(action)
             const item = action.payload;
             if (item.type === 'bun') {
                 return {

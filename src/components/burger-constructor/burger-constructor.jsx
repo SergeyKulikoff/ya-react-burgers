@@ -17,15 +17,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 
 //Actions 
-import { getFetchData, ingredientChoose, ingredientDelete, countDecrease, countIncrease, sortIngredients } from '../../services/actions/index';
+import { ingredientChoose, ingredientDelete, countDecrease, countIncrease, sortIngredients } from '../../services/actions/index';
 import { constructorShowModal } from '../../services/actions';
+import { getFetchData } from '../../services/actions/ingredients';
+
+import { createOrder, clearOrder } from '../../services/actions/order';
+
 
 export default function BurgerConstructor() {
-	const isActive = useSelector(state => state.isOpen);
+	const onClose = useSelector(state => state.isOpen);
 	const { bun, contentItems } = useSelector(state => state.fetchData.burgerIngredients);
 
 	const dispatch = useDispatch();
-	const toggleModal = () => dispatch(constructorShowModal());
+
+	const handleCheckout = () => {
+		let ingredientsArr = [bun.id];
+
+		for (let item of contentItems) {
+			ingredientsArr.push(item.id)
+		}
+
+		dispatch(createOrder(ingredientsArr));
+		dispatch(constructorShowModal());
+	}
+
+	const toggleModal = () => {
+		dispatch(constructorShowModal());
+		dispatch(clearOrder());
+	};
 
 	useEffect(() => {
 		dispatch(getFetchData());
@@ -35,8 +54,8 @@ export default function BurgerConstructor() {
 	const [{ canDrop }, dropTarget] = useDrop({
 		accept: "card",
 		drop(item) {
-			dispatch(ingredientChoose(item))
-			dispatch(countIncrease(item))
+			dispatch(ingredientChoose(item));
+			dispatch(countIncrease(item));
 		},
 		collect: monitor => ({
 			isHover: monitor.isOver(),
@@ -94,7 +113,7 @@ export default function BurgerConstructor() {
 
 							return (
 								<ListItem
-									key={index}
+									key={item.productId}
 									item={item}
 									isLocked={false}
 									deleteFunc={deleteIngredient}
@@ -123,17 +142,14 @@ export default function BurgerConstructor() {
 						<span>{totalPrice(bun, contentItems)}</span>
 						<CurrencyIcon type="primary " className="mr-2" />
 					</div>
-
-					<Button type="primary" size="large" onClick={toggleModal}>
-						Оформить заказ
-					</Button>
+					{bun && <Button type="primary" size="large" onClick={handleCheckout}>Оформить заказ</Button>}
 				</div>
 			</section>
 
-			{isActive.constructorModal && (
+			{onClose.constructorModal && (
 				<Modal
 					title=''
-					isOpen={toggleModal}
+					onClose={toggleModal}
 				>
 					<OrderDetails />
 				</Modal>

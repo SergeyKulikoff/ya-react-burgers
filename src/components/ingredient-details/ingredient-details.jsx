@@ -5,9 +5,10 @@ import { ingredientPropType } from '../../utils/prop-types';
 //Style
 import style from './ingredient-details.module.css'
 
-export default function IngredientDetails(ingredient) {
+export default function IngredientDetails({ingredient}) {
+	
 	return (
-		ingredient.ingredient.map(elem => {
+		ingredient.map(elem => {
 			return (
 				<div className={`${style.item} pl-25 pr-25 pt-4`} key={elem._id}>
 					<div className={style.image}>

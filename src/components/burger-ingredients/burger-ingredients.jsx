@@ -9,14 +9,14 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 //Actions 
-import { getFetchData } from '../../services/actions/index';
+import { getFetchData } from "../../services/actions/ingredients";
 import { ingredientShowModal } from "../../services/actions";
 
 //Style
 import style from './burger-ingredients.module.css'
 
 export default function BurgerIngredients() {
-	const isActive = useSelector(state => state.isOpen);
+	const onClose = useSelector(state => state.isOpen);
 	const ingredients = useSelector(state => state.fetchData.ingredient);
 	const dispatch = useDispatch();
 
@@ -30,7 +30,7 @@ export default function BurgerIngredients() {
 	const bun = ingredients.filter(elem => elem.type === 'bun');
 	const sauce = ingredients.filter(elem => elem.type === 'sauce');
 	const main = ingredients.filter(elem => elem.type === 'main');
-	const [selectIngredient, setSelectIingredient] = useState([])
+	const [selectIngredient, setSelectIingredient] = useState(null)
 
 	const scrollTab = tab => {
 		setCurrent(tab)
@@ -119,9 +119,9 @@ export default function BurgerIngredients() {
 			</section>
 
 			{
-				isActive.ingredientModal && (
+				onClose.ingredientModal && (
 					<Modal
-						isOpen={onIngredientClick}
+						onClose={onIngredientClick}
 						title={'Детали ингредиента'}
 					>
 						<IngredientDetails ingredient={selectIngredient} />

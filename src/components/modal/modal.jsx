@@ -14,34 +14,34 @@ import style from './modal.module.css';
 
 const modalRoot = document.getElementById("react-modals");
 
-export default function Modal({ isOpen, children, title }) {
+export default function Modal({ onClose, children, title }) {
 	useEffect(() => {
-		const pressCloseModal = e => e.key === 'Escape' && isOpen();
+		const pressCloseModal = e => e.key === 'Escape' && onClose();
 
 		document.addEventListener('keydown', pressCloseModal);
 		return () => {
 			document.removeEventListener('keydown', pressCloseModal);
 		}
-	}, [isOpen]);
+	}, [onClose]);
 
 	return ReactDOM.createPortal(
 		<>
 			<div className={`${style.modal} p-10 pb-15`}>
 				<div className={style.headline}>
 					<p>{title}</p>
-					<span className={style.close} onClick={isOpen}></span>
+					<span className={style.close} onClick={onClose}></span>
 				</div>
 
 				{children}
 			</div>
-			<ModalOverlay close={isOpen} />
+			<ModalOverlay close={onClose} />
 		</>,
 		modalRoot
 	);
 }
 
 Modal.propTypes = {
-	isOpen: PropTypes.func.isRequired,
+	onClose: PropTypes.func.isRequired,
 	title: PropTypes.string.isRequired,
 	children: PropTypes.node.isRequired,
 }
