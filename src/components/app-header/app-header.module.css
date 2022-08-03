@@ -1,7 +1,6 @@
 .header{
 	display: flex;
-	justify-content: center;
-	padding: 40px;
+	padding-bottom:40px;
 }
 
 .wrapper{

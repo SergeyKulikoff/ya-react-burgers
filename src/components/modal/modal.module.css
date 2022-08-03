@@ -1,0 +1,55 @@
+.modal{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 720px;
+	max-height: 720px;
+	background-color: #1C1C21;
+	color: #F2F2F3;
+	border-radius: 40px;
+	box-sizing: border-box;
+	z-index: 1000;
+}
+
+.modal p {
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 36px;
+	line-height: 40px;
+}
+
+
+.headline{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.close{
+	position: relative;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+
+.close:before,
+.close:after {
+   content: "";
+   position: absolute;
+	top: 50%;
+	left:0%;
+   width: 24px;
+ 	height:3px;
+ 	background: #F2F2F3;
+	border-radius: 4px;
+}
+
+.close:before {
+    transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
+}
