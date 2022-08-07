@@ -1,81 +1,133 @@
-import React from "react";
+//React hooks
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../ingredinet-card/ingredient-card";
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+
+//Actions 
+import { getFetchData } from "../../services/actions/ingredients";
+import { ingredientShowModal } from "../../services/actions";
 
 //Style
 import style from './burger-ingredients.module.css'
 
-const BurgerIngredients = (props) => {
-	const [current, setCurrent] = React.useState('one')
+export default function BurgerIngredients() {
+	const onClose = useSelector(state => state.isOpen);
+	const ingredients = useSelector(state => state.fetchData.ingredient);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getFetchData());
+
+	}, [dispatch]);
+
+	const [current, setCurrent] = useState('Булки');
+
+	const bun = ingredients.filter(elem => elem.type === 'bun');
+	const sauce = ingredients.filter(elem => elem.type === 'sauce');
+	const main = ingredients.filter(elem => elem.type === 'main');
+	const [selectIngredient, setSelectIingredient] = useState(null)
+
+	const scrollTab = tab => {
+		setCurrent(tab)
+		const element = document.getElementById(tab);
+
+		if (element) element.scrollIntoView({ behavior: "smooth" })
+	}
+
+	const onIngredientClick = id => {
+		dispatch(ingredientShowModal())
+		const selectID = ingredients.filter(elem => elem._id === id);
+		setSelectIingredient(selectID)
+	}
 
 	return (
-		<section>
-			<div className={style.tabsBox}>
-				<Tab value="one" active={current === 'one'} onClick={setCurrent}>
-					Булки
-				</Tab>
-				<Tab value="two" active={current === 'two'} onClick={setCurrent}>
-					Соусы
-				</Tab>
-				<Tab value="three" active={current === 'three'} onClick={setCurrent}>
-					Начинки
-				</Tab>
-			</div>
-
-			<div className={style.content}>
-				<div className={style.ingredientBox}>
-					<div className={style.headline}>Булки</div>
-					{props.bun.map((elem, index) => {
-						console.log(elem)
-						return (
-							<IngredientCard
-								key={index}
-								image={elem.image}
-								name={elem.name}
-								price={elem.price}
-								proteins={elem.proteins}
-							/>
-						)
-					})}
+		<>
+			<section>
+				<div className={style.tabsBox}>
+					<Tab value="Булки" active={current === 'Булки'} onClick={scrollTab}>
+						Булки
+					</Tab>
+					<Tab value="Соусы" active={current === 'Соусы'} onClick={scrollTab}>
+						Соусы
+					</Tab>
+					<Tab value="Начинки" active={current === 'Начинки'} onClick={scrollTab}>
+						Начинки
+					</Tab>
 				</div>
 
-				<div className={style.ingredientBox}>
-					<div className={style.headline}>Соусы</div>
-					{props.sauce.map((elem, index) => {
-						console.log(elem)
-						return (
-							<IngredientCard
-								key={index}
-								image={elem.image}
-								name={elem.name}
-								price={elem.price}
-								proteins={elem.proteins}
-							/>
-						)
-					})}
+				<div className={style.content}>
+					<div className={style.ingredientBox}>
+						<div className={style.headline} id="Булки">Булки</div>
+
+						{bun.map(elem => {
+							return (
+								<IngredientCard
+									key={elem._id}
+									id={elem._id}
+									image={elem.image}
+									name={elem.name}
+									price={elem.price}
+									type={elem.type}
+									data={ingredients}
+									OnIngredientClick={onIngredientClick}
+								/>
+							)
+						})}
+					</div>
+
+					<div className={style.ingredientBox}>
+						<div className={style.headline} id="Соусы">Соусы</div>
+						{sauce.map(elem => {
+							return (
+								<IngredientCard
+									key={elem._id}
+									id={elem._id}
+									image={elem.image}
+									name={elem.name}
+									price={elem.price}
+									type={elem.type}
+									data={ingredients}
+									OnIngredientClick={onIngredientClick}
+								/>
+							)
+						})}
+					</div>
+
+					<div className={style.ingredientBox}>
+						<div className={style.headline} id="Начинки">Начинки</div>
+						{main.map(elem => {
+							return (
+								<IngredientCard
+									key={elem._id}
+									id={elem._id}
+									image={elem.image}
+									name={elem.name}
+									price={elem.price}
+									type={elem.type}
+									data={ingredients}
+									OnIngredientClick={onIngredientClick}
+								/>
+							)
+						})}
+					</div>
 				</div>
+			</section>
 
-				<div className={style.ingredientBox}>
-					<div className={style.headline}>Начинки</div>
-					{props.main.map((elem, index) => {
-						console.log(elem)
-						return (
-							<IngredientCard
-								key={index}
-								image={elem.image}
-								name={elem.name}
-								price={elem.price}
-								proteins={elem.proteins}
-							/>
-						)
-					})}
-				</div>
-			</div>
-
-
-		</section>
+			{
+				onClose.ingredientModal && (
+					<Modal
+						onClose={onIngredientClick}
+						title={'Детали ингредиента'}
+					>
+						<IngredientDetails ingredient={selectIngredient} />
+					</Modal>
+				)
+			}
+		</>
 	)
 }
-export default BurgerIngredients
