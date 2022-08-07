@@ -5,8 +5,8 @@ import { ingredientPropType } from '../../utils/prop-types';
 //Style
 import style from './ingredient-details.module.css'
 
-export default function IngredientDetails({ingredient}) {
-	
+export default function IngredientDetails({ ingredient }) {
+
 	return (
 		ingredient.map(elem => {
 			return (
@@ -46,5 +46,5 @@ export default function IngredientDetails({ingredient}) {
 	)
 }
 IngredientDetails.propTypes = {
-	ingredient: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+	ingredient: PropTypes.arrayOf(ingredientPropType.isRequired),
 }
