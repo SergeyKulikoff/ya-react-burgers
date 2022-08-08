@@ -1,69 +1,81 @@
 //React hooks
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientCard from "../ingredinet-card/ingredient-card";
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import IngredientCard from "../ingredient-card/ingredient-card";
 
 //Actions 
 import { getFetchData } from "../../services/actions/ingredients";
-import { ingredientShowModal } from "../../services/actions";
 
 //Style
 import style from './burger-ingredients.module.css'
 
 export default function BurgerIngredients() {
-	const onClose = useSelector(state => state.isOpen);
+	const [current, setCurrent] = useState('Булки');
 	const ingredients = useSelector(state => state.fetchData.ingredient);
 	const dispatch = useDispatch();
+
+	const bun = ingredients.filter(elem => elem.type === 'bun');
+	const sauce = ingredients.filter(elem => elem.type === 'sauce');
+	const main = ingredients.filter(elem => elem.type === 'main');
+
+	const primaryRef = useRef(null);
+	const bunRef = useRef(null);
+	const sauceRef = useRef(null);
+	const mainRef = useRef(null);
 
 	useEffect(() => {
 		dispatch(getFetchData());
 
 	}, [dispatch]);
 
-	const [current, setCurrent] = useState('Булки');
 
-	const bun = ingredients.filter(elem => elem.type === 'bun');
-	const sauce = ingredients.filter(elem => elem.type === 'sauce');
-	const main = ingredients.filter(elem => elem.type === 'main');
-	const [selectIngredient, setSelectIingredient] = useState(null)
 
-	const scrollTab = tab => {
+	const setTab = tab => {
+		console.log(tab);
 		setCurrent(tab)
 		const element = document.getElementById(tab);
 
 		if (element) element.scrollIntoView({ behavior: "smooth" })
 	}
 
-	const onIngredientClick = id => {
-		dispatch(ingredientShowModal())
-		const selectID = ingredients.filter(elem => elem._id === id);
-		setSelectIingredient(selectID)
+	const handleScroll = () => {
+		if (primaryRef && bunRef && sauceRef && mainRef && primaryRef.current && bunRef.current && sauceRef.current && mainRef.current) {
+			const bunDistance = Math.abs(primaryRef.current.getBoundingClientRect().top - bunRef.current.getBoundingClientRect().top)
+			const sauceDistance = Math.abs(primaryRef.current.getBoundingClientRect().top - sauceRef.current.getBoundingClientRect().top)
+			const mainDistance = Math.abs(primaryRef.current.getBoundingClientRect().top - mainRef.current.getBoundingClientRect().top)
+			const minDistance = Math.min(bunDistance, sauceDistance, mainDistance);
+			const currentHeader = minDistance === bunDistance
+				? 'Булки' : minDistance === sauceDistance ? 'Соусы' : 'Начинки';
+			setCurrent(prevState => (currentHeader === prevState ? prevState : currentHeader))
+		}
 	}
+
+	useEffect(() => {
+		document.getElementById(current)?.scrollIntoView();
+	},[current])
 
 	return (
 		<>
 			<section>
 				<div className={style.tabsBox}>
-					<Tab value="Булки" active={current === 'Булки'} onClick={scrollTab}>
+					<Tab value="Булки" active={current === 'Булки'} onClick={setTab}>
 						Булки
 					</Tab>
-					<Tab value="Соусы" active={current === 'Соусы'} onClick={scrollTab}>
-						Соусы
-					</Tab>
-					<Tab value="Начинки" active={current === 'Начинки'} onClick={scrollTab}>
+					<Tab value="Начинки" active={current === 'Начинки'} onClick={setTab}>
 						Начинки
+					</Tab>
+					<Tab value="Соусы" active={current === 'Соусы'} onClick={setTab}>
+						Соусы
 					</Tab>
 				</div>
 
-				<div className={style.content}>
-					<div className={style.ingredientBox}>
-						<div className={style.headline} id="Булки">Булки</div>
-
+				<div className={style.content} ref={primaryRef} onScroll={handleScroll}>
+					<div className={style.ingredientBox} id="Булки" ref={bunRef}>
+						<div className={style.headline} >Булки</div>
+						
 						{bun.map(elem => {
 							return (
 								<IngredientCard
@@ -74,32 +86,13 @@ export default function BurgerIngredients() {
 									price={elem.price}
 									type={elem.type}
 									data={ingredients}
-									OnIngredientClick={onIngredientClick}
 								/>
 							)
 						})}
 					</div>
 
-					<div className={style.ingredientBox}>
-						<div className={style.headline} id="Соусы">Соусы</div>
-						{sauce.map(elem => {
-							return (
-								<IngredientCard
-									key={elem._id}
-									id={elem._id}
-									image={elem.image}
-									name={elem.name}
-									price={elem.price}
-									type={elem.type}
-									data={ingredients}
-									OnIngredientClick={onIngredientClick}
-								/>
-							)
-						})}
-					</div>
-
-					<div className={style.ingredientBox}>
-						<div className={style.headline} id="Начинки">Начинки</div>
+					<div className={style.ingredientBox} id="Начинки" ref={mainRef} >
+						<div className={style.headline} >Начинки</div>
 						{main.map(elem => {
 							return (
 								<IngredientCard
@@ -110,24 +103,29 @@ export default function BurgerIngredients() {
 									price={elem.price}
 									type={elem.type}
 									data={ingredients}
-									OnIngredientClick={onIngredientClick}
+								/>
+							)
+						})}
+					</div>
+
+					<div className={style.ingredientBox} id="Соусы" ref={sauceRef} >
+						<div className={style.headline} >Соусы</div>
+						{sauce.map(elem => {
+							return (
+								<IngredientCard
+									key={elem._id}
+									id={elem._id}
+									image={elem.image}
+									name={elem.name}
+									price={elem.price}
+									type={elem.type}
+									data={ingredients}
 								/>
 							)
 						})}
 					</div>
 				</div>
 			</section>
-
-			{
-				onClose.ingredientModal && (
-					<Modal
-						onClose={onIngredientClick}
-						title={'Детали ингредиента'}
-					>
-						<IngredientDetails ingredient={selectIngredient} />
-					</Modal>
-				)
-			}
 		</>
 	)
 }

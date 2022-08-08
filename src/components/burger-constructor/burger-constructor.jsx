@@ -20,25 +20,33 @@ import { useDrop } from "react-dnd";
 import { ingredientChoose, ingredientDelete, countDecrease, countIncrease, sortIngredients } from '../../services/actions/index';
 import { constructorShowModal } from '../../services/actions';
 import { getFetchData } from '../../services/actions/ingredients';
-
 import { createOrder, clearOrder } from '../../services/actions/order';
+
+//Router
+import { useHistory } from 'react-router-dom';
 
 
 export default function BurgerConstructor() {
 	const onClose = useSelector(state => state.isOpen);
 	const { bun, contentItems } = useSelector(state => state.fetchData.burgerIngredients);
+	const history = useHistory();
+	const hasToken = localStorage.getItem('refreshToken');
 
 	const dispatch = useDispatch();
 
 	const handleCheckout = () => {
-		let ingredientsArr = [bun.id];
+		if (hasToken && bun) {
+			let ingredientsArr = [bun.id];
+			for (let item of contentItems) {
+				ingredientsArr.push(item.id)
+			}
 
-		for (let item of contentItems) {
-			ingredientsArr.push(item.id)
+			dispatch(createOrder(ingredientsArr));
+			dispatch(constructorShowModal());
+		} else {
+			history.replace({ pathname: '/login' })
+
 		}
-
-		dispatch(createOrder(ingredientsArr));
-		dispatch(constructorShowModal());
 	}
 
 	const toggleModal = () => {

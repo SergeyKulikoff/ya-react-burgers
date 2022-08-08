@@ -1,0 +1,29 @@
+.login_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0px;
+	margin-top:140px;
+}
+
+.login_form {
+	margin-top: 50px;
+	height: 280px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.login_text {
+	margin-top: 80px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	
+}
+
+.login_text span{
+	margin-bottom: 15px;
+}
