@@ -22,7 +22,8 @@ export const loginRequest = ({ email, password }) => {
 		headers: {
 			'Content-Type': 'application/json;charset=utf-8'
 		},
-		body: JSON.stringify({ email: email, password }),
+		// body: JSON.stringify({ email: email, password }),
+		body: JSON.stringify({ email, password }),
 	})
 		.then(checkResponse);
 };
@@ -66,8 +67,10 @@ const fetchWithRefreshToken = callback => {
 			return callback()
 		})
 	}
-	return callback().then(res => checkResponse(res))
+	return callback()
+		.then(res => checkResponse(res))
 		.catch(res => {
+			console.log(res)
 			return res.json()
 				.then((err) => {
 					if (err?.message === 'jwt expired') {
@@ -87,6 +90,7 @@ const fetchWithRefreshToken = callback => {
 					} else {
 						delCookie('token');
 						localStorage.removeItem('refreshToken');
+
 						return Promise.reject(err)
 					}
 				})

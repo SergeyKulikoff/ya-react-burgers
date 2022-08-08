@@ -37,7 +37,7 @@ export const LoginPage = () => {
 		e.preventDefault();
 		dispatch(loginAction(state))
 			.then(() => {
-				history.replace({ pathname: location.state?.from?.pathname || '/' })
+				history.replace({ pathname: location.state?.from?.pathname || '/' });
 			});
 	};
 

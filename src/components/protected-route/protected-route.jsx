@@ -15,11 +15,13 @@ export const ProtectedRoute = ({ children, ...rest }) => {
 			</Route>
 		)
 	} else {
-		return (<Redirect
+		return (
+		<Redirect
 			to={{
 				pathname: '/login',
 				state: { from: location }
 			}}
 		/>)
 	}
+
 };

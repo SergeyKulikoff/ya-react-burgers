@@ -1,6 +1,5 @@
 import {
 	CONSTRUCTOR_MODAL,
-	INGREDIENT_MODAL,
 	INGREDIENTS_DATA,
 	INGREDIENTS_CHOOSE,
 	INGREDIENT_DELETE,
@@ -27,10 +26,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const constructorShowModal = () => ({
 	type: CONSTRUCTOR_MODAL
-})
-
-export const ingredientShowModal = () => ({
-	type: INGREDIENT_MODAL
 })
 
 export const ingredientGET = data => ({

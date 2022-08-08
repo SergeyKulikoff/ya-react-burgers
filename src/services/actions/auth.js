@@ -3,7 +3,6 @@ import {
 	loginRequest,
 	refreshTokenRequest,
 	logoutRequest,
-
 	getUserRequest,
 	updateUserRequest
 } from '../../utils/api-requests';
@@ -77,12 +76,13 @@ export const refreshTokenAction = () => {
 					const authToken = res.accessToken.split('Bearer ')[1];
 					setCookie('token', authToken);
 
+					console.log(res)
 					delCookie('token');
 					dispatch(refreshTokenSuccesAction());
 				}
 			})
 			.catch(err => {
-				dispatch(refreshTokenFailedAction);
+				dispatch(refreshTokenFailedAction());
 				console.error('Error2: ', err);
 			});
 	};

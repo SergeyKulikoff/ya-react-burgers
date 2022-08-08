@@ -56,7 +56,7 @@ export const ProfilePage = () => {
 
 	useEffect(() => {
 		dispatch(getUserAction())
-	}, [dispatch]);
+	}, []);
 
 	return (
 		<div className={style.profile_main + " pt-20"} >
