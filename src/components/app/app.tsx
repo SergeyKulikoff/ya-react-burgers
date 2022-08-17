@@ -15,8 +15,8 @@ import { ProfilePage } from '../../pages/profile/profile';
 import { ProtectedRoute } from '../protected-route/protected-route';
 
 //Redux
-import { useDispatch } from 'react-redux';
-
+// import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooks';
 //React
 import { useEffect } from "react";
 
@@ -27,12 +27,12 @@ import { getFetchData } from "../../services/actions/ingredients";
 import style from './app.module.css';
 
 export default function App() {
-	const location = useLocation();
+	const location = useLocation<any>();
 	const history = useHistory();
 	const background = location.state && location.state.background;
 
-	const dispatch = useDispatch()
-	const handleModalClose = ()=> history.goBack();
+	const dispatch = useAppDispatch()
+	const handleModalClose = () => history.goBack();
 
 	useEffect(() => {
 		dispatch(getFetchData());
@@ -84,11 +84,11 @@ export default function App() {
 			</Switch>
 			{background && (
 				<>
-				<Route path='/ingredients/:id' exact>
-					<Modal onClose={handleModalClose} title={"Детали ингредиента"}>
-						<IngredientDetails />
-					</Modal>
-				</Route>
+					<Route path='/ingredients/:id' exact>
+						<Modal onClose={handleModalClose} title={"Детали ингредиента"}>
+							<IngredientDetails />
+						</Modal>
+					</Route>
 				</>
 			)}
 		</div >

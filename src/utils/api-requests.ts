@@ -1,11 +1,12 @@
 import * as config from '../config';
-import { setCookie, delCookie } from '../utils/cookie';
+import { setCookie, delCookie } from './cookie';
+import { TUser, TUserRequest, TError } from '../types'
 
-export const checkResponse = res => {
+export const checkResponse = (res: Response) => {
 	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 }
 
-export const registerRequest = ({ email, password, name }) => {
+export const registerRequest = ({ email, password, name }: TUser) => {
 	return fetch(config.registerUrl, {
 		method: 'POST',
 		headers: {
@@ -16,13 +17,12 @@ export const registerRequest = ({ email, password, name }) => {
 		.then(checkResponse);
 };
 
-export const loginRequest = ({ email, password }) => {
+export const loginRequest = ({ email, password }: TUser) => {
 	return fetch(config.loginUrl, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json;charset=utf-8'
 		},
-		// body: JSON.stringify({ email: email, password }),
 		body: JSON.stringify({ email, password }),
 	})
 		.then(checkResponse);
@@ -54,14 +54,15 @@ export const logoutRequest = () => {
 		.then(checkResponse);
 };
 
-export const getUserRequest = token => {
+export const getUserRequest = (token: string) => {
 	return fetchWithRefreshToken(() => {
 		return getUserFetch(config.userUrl, 'GET', token);
 	})
 };
 
-let cash = null;
-const fetchWithRefreshToken = callback => {
+let cash: Promise<void> | null = null;
+
+const fetchWithRefreshToken = (callback: () => Promise<any>) => {
 	if (cash) {
 		return cash.then(() => {
 			return callback()
@@ -69,10 +70,10 @@ const fetchWithRefreshToken = callback => {
 	}
 	return callback()
 		.then(res => checkResponse(res))
-		.catch(res => {
+		.catch((res: Response) => {
 			console.log(res)
 			return res.json()
-				.then((err) => {
+				.then((err: TError) => {
 					if (err?.message === 'jwt expired') {
 						console.log('fetchWithRefreshToken');
 						if (!cash) {
@@ -97,7 +98,7 @@ const fetchWithRefreshToken = callback => {
 		});
 };
 
-const getUserFetch = (url, method, authToken) => {
+const getUserFetch = (url: string, method: string, authToken: string) => {
 	return fetch(url, {
 		method: method,
 		headers: {
@@ -107,13 +108,13 @@ const getUserFetch = (url, method, authToken) => {
 	})
 };
 
-export const updateUserRequest = (params) => {
+export const updateUserRequest = (params: TUserRequest) => {
 	return fetchWithRefreshToken(() => {
 		return patchUserFetch(config.userUrl, 'PATCH', params);
 	}).then(checkResponse);
 };
 
-const patchUserFetch = (url, method, params) => {
+const patchUserFetch = (url: string, method: string, params: Record<string, any> | string) => {
 	const authToken = localStorage.getItem('accessToken');
 	return fetch(url, {
 		method: method,

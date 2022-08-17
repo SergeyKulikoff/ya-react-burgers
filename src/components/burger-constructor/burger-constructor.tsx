@@ -13,7 +13,6 @@ import style from './burger-constructor.module.css';
 
 //React hooks
 import { useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 
 //Actions 
@@ -24,15 +23,16 @@ import { createOrder, clearOrder } from '../../services/actions/order';
 
 //Router
 import { useHistory } from 'react-router-dom';
-
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { TIngredient } from '../../types';
 
 export default function BurgerConstructor() {
-	const onClose = useSelector(state => state.isOpen);
-	const { bun, contentItems } = useSelector(state => state.fetchData.burgerIngredients);
+	const onClose = useAppSelector(state => state.isOpen);
+	const { bun, contentItems } = useAppSelector(state => state.fetchData.burgerIngredients);
 	const history = useHistory();
 	const hasToken = localStorage.getItem('refreshToken');
 
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const handleCheckout = () => {
 		if (hasToken && bun) {
@@ -71,7 +71,7 @@ export default function BurgerConstructor() {
 		})
 	});
 
-	const moveItem = useCallback((dragIndex, hoverIndex) => {
+	const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
 		dispatch(sortIngredients(dragIndex, hoverIndex))
 	}, [dispatch])
 
@@ -86,7 +86,7 @@ export default function BurgerConstructor() {
 		column = style.column;
 	}
 
-	const totalPrice = (bun, items) => {
+	const totalPrice = (bun: TIngredient | null, items: TIngredient[]) => {
 		let summ = bun ? bun.price * 2 : 0;
 		if (items) items.map(itm => summ += itm.price);
 		return summ;
@@ -113,7 +113,7 @@ export default function BurgerConstructor() {
 
 				<div className={style.listIngredients}>
 					<ul>
-						{contentItems && contentItems.map((item, index) => {
+						{contentItems && contentItems.map((item: TIngredient, i: number) => {
 							const deleteIngredient = () => {
 								dispatch(ingredientDelete(item.productId))
 								dispatch(countDecrease(item))
@@ -126,7 +126,7 @@ export default function BurgerConstructor() {
 									isLocked={false}
 									deleteFunc={deleteIngredient}
 									moveFunc={moveItem}
-									index={index}
+									index={i}
 								/>
 							)
 						})}
@@ -148,8 +148,9 @@ export default function BurgerConstructor() {
 				<div className={style.checkout}>
 					<div className={style.totalprice}>
 						<span>{totalPrice(bun, contentItems)}</span>
-						<CurrencyIcon type="primary " className="mr-2" />
+						<CurrencyIcon type="primary" />
 					</div>
+					{/*// @ts-ignore*/}
 					{bun && <Button type="primary" size="large" onClick={handleCheckout}>Оформить заказ</Button>}
 				</div>
 			</section>

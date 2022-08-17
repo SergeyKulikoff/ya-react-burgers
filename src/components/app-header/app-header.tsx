@@ -23,8 +23,6 @@ export default function AppHeader() {
 						<NavLink to='/' exact={true} className={style.link}>
 							<BurgerIcon type={pathname === '/' ? "primary" : "secondary"} />
 							<p className="text text_type_main-default ml-2">Конструктор</p>
-
-
 						</NavLink>
 
 						<a href="#" className={`${style.link} ${style.active} p-4`}>

@@ -1,6 +1,5 @@
 //React hooks
 import { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,29 +10,32 @@ import { getFetchData } from "../../services/actions/ingredients";
 
 //Style
 import style from './burger-ingredients.module.css'
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { TIngredient } from "../../types";
+
 
 export default function BurgerIngredients() {
-	const [current, setCurrent] = useState('Булки');
-	const ingredients = useSelector(state => state.fetchData.ingredient);
-	const dispatch = useDispatch();
+	const [current, setCurrent] = useState<string>('Булки');
+	const ingredients: Array<TIngredient> = useAppSelector(state => state.fetchData.ingredient);
+	const dispatch = useAppDispatch();
+
+	console.log(ingredients)
 
 	const bun = ingredients.filter(elem => elem.type === 'bun');
 	const sauce = ingredients.filter(elem => elem.type === 'sauce');
 	const main = ingredients.filter(elem => elem.type === 'main');
 
-	const primaryRef = useRef(null);
-	const bunRef = useRef(null);
-	const sauceRef = useRef(null);
-	const mainRef = useRef(null);
+	const primaryRef = useRef<HTMLDivElement>(null);
+	const bunRef = useRef<any>(null);
+	const sauceRef = useRef<any>(null);
+	const mainRef = useRef<any>(null);
 
 	useEffect(() => {
 		dispatch(getFetchData());
 
 	}, [dispatch]);
 
-
-
-	const setTab = tab => {
+	const setTab = (tab: any) => {
 		console.log(tab);
 		setCurrent(tab)
 		const element = document.getElementById(tab);
@@ -55,19 +57,23 @@ export default function BurgerIngredients() {
 
 	useEffect(() => {
 		document.getElementById(current)?.scrollIntoView();
-	},[current])
+	}, [current])
 
 	return (
 		<>
 			<section>
 				<div className={style.tabsBox}>
-					<Tab value="Булки" active={current === 'Булки'} onClick={setTab}>
+					{/*// @ts-ignore*/}
+					<Tab value="Булки" active={current === 'Булки'
+					} onClick={setTab} >
 						Булки
 					</Tab>
-					<Tab value="Начинки" active={current === 'Начинки'} onClick={setTab}>
+					{/*// @ts-ignore*/}
+					< Tab value="Начинки" active={current === 'Начинки'} onClick={setTab} >
 						Начинки
 					</Tab>
-					<Tab value="Соусы" active={current === 'Соусы'} onClick={setTab}>
+					{/*// @ts-ignore*/}
+					< Tab value="Соусы" active={current === 'Соусы'} onClick={setTab} >
 						Соусы
 					</Tab>
 				</div>
@@ -75,7 +81,7 @@ export default function BurgerIngredients() {
 				<div className={style.content} ref={primaryRef} onScroll={handleScroll}>
 					<div className={style.ingredientBox} id="Булки" ref={bunRef}>
 						<div className={style.headline} >Булки</div>
-						
+
 						{bun.map(elem => {
 							return (
 								<IngredientCard
@@ -85,7 +91,6 @@ export default function BurgerIngredients() {
 									name={elem.name}
 									price={elem.price}
 									type={elem.type}
-									data={ingredients}
 								/>
 							)
 						})}
@@ -102,7 +107,6 @@ export default function BurgerIngredients() {
 									name={elem.name}
 									price={elem.price}
 									type={elem.type}
-									data={ingredients}
 								/>
 							)
 						})}
@@ -119,7 +123,6 @@ export default function BurgerIngredients() {
 									name={elem.name}
 									price={elem.price}
 									type={elem.type}
-									data={ingredients}
 								/>
 							)
 						})}
