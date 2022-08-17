@@ -1,18 +1,16 @@
 //Router
 import { NavLink, useLocation } from "react-router-dom";
 
-//Redux
-import { useDispatch } from "react-redux";
-
 //Actions
 import { logoutAction } from "../../services/actions/auth";
 
 //Style
 import style from "./profile.module.css"
+import { useAppDispatch } from "../../hooks/hooks";
 
 export function Links() {
 	const { pathname } = useLocation();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const handleExit = () => {
 		dispatch(logoutAction());

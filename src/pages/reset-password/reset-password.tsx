@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Logo, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './reset-password.module.css';
 import * as config from "../../config";
 import { checkResponse } from "../../utils/api-requests";
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 
 export const ResetPasswordPage = () => {
 	const [password, setPassword] = useState('');
 	const [token, setToken] = useState('');
-	const authorized = useSelector(state => state.authReducer.authorized);
+	const authorized = useAppSelector(state => state.authReducer.authorized);
 	let history = useHistory();
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		console.log(config.ResetUrl)
 		fetch(config.ResetUrl, {
@@ -44,6 +44,7 @@ export const ResetPasswordPage = () => {
 					<Input type={"text"} placeholder={"Введите код из письма"} value={token}
 						onChange={event => setToken(event.target.value)} />
 
+					{/*// @ts-ignore*/}
 					<Button type="primary" size="small">
 						<p className="text text_type_main-default">Сохранить</p>
 					</Button>

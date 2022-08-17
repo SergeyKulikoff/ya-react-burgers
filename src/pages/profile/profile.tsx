@@ -1,5 +1,5 @@
 //React-hook
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 
 //Router
 import { Route, Switch } from "react-router-dom";
@@ -11,15 +11,14 @@ import { Links } from "./links";
 //Actions
 import { getUserAction, updateUserAction } from "../../services/actions/auth";
 
-//Redux
-import { useDispatch, useSelector } from "react-redux";
-
 //Style
 import style from "./profile.module.css";
+import { TUser } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 export const ProfilePage = () => {
-	const dispatch = useDispatch();
-	const emptyState = {
+	const dispatch = useAppDispatch();
+	const emptyState: TUser = {
 		name: "",
 		email: "",
 		password: ""
@@ -27,21 +26,21 @@ export const ProfilePage = () => {
 
 	const [defaultState, setDefaultState] = useState(emptyState);
 	const [state, setState] = useState(emptyState);
-	const user = useSelector(state => state.authReducer.user);
+	const user = useAppSelector(state => state.authReducer.user);
 
-	const handleInputChange = e => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setState({
 			...state,
 			[e.target.name]: e.target.value
 		});
 	};
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		dispatch(updateUserAction(state));
 	};
 
-	const handleReset = e => {
+	const handleReset = (e: SyntheticEvent) => {
 		e.preventDefault();
 		setState(defaultState);
 	};
@@ -94,10 +93,13 @@ export const ProfilePage = () => {
 								value={state.password || ''}
 								size={"default"}
 							/>
+
+							{/*// @ts-ignore*/}
 							<Button type="primary" size="small" >
 								<p className="text text_type_main-default">Сохранить</p>
 							</Button>
 
+							{/*// @ts-ignore*/}
 							<Button type="secondary" size="small" onClick={handleReset}>
 								<p className="text text_type_main-default">Отмена</p>
 							</Button>

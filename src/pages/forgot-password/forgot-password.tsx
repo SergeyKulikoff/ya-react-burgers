@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Logo, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './forgot-password.module.css';
 import * as config from "../../config";
 import { checkResponse } from "../../utils/api-requests";
+import { useAppSelector } from '../../hooks/hooks';
 
 export const ForgotPasswordPage = () => {
 	const [email, setEmail] = useState('');
 	let history = useHistory();
-	const authorized = useSelector(state => state.authReducer.authorized);
+	const authorized = useAppSelector(state => state.authReducer.authorized);
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		fetch(config.ForgotUrl, {
 			method: 'POST',
@@ -40,6 +41,8 @@ export const ForgotPasswordPage = () => {
 				<form className={style.forgot_form} onSubmit={handleSubmit}>
 					<h3 className="text text_type_main-medium">Восстановление пароля</h3>
 					<Input type={"email"} placeholder={"Укажите e-mail"} onChange={(event) => setEmail(event.target.value)} value={email} />
+
+					{/*// @ts-ignore*/}
 					<Button type="primary" size="small" >
 						<p className="text text_type_main-default">Восстановить</p>
 					</Button>
