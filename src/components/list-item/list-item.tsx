@@ -2,39 +2,53 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 //React hooks
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { TIngredient } from '../../types';
 
 //Style
-import style from './list-item.module.css'
+import style from './list-item.module.css';
 
-export default function ListItem({ item, index, isLocked, deleteFunc, moveFunc }) {
-    const id = item._id;
-    const ref = useRef(null);
+interface IListProps {
+    item: TIngredient,
+    isLocked: boolean,
+    deleteFunc: any,
+    moveFunc: any
+    index: number,
+}
 
-    const [{ handlerId }, drop] = useDrop({
+interface DragItem {
+    index: number
+    id: string
+    type: string
+}
+
+export const ListItem: FC<IListProps> = ({ item, index, isLocked, deleteFunc, moveFunc }) => {
+    const id = item._id
+    const ref = useRef<HTMLLIElement>(null)
+
+    const [, drop] = useDrop<DragItem>({
         accept: 'item',
+
         collect(monitor) {
             return {
                 handlerId: monitor.getHandlerId(),
             };
         },
-        hover(item, monitor) {
+        hover(item: { index: number }, monitor) {
             if (!ref.current) return;
             const dragIndex = item.index;
             const hoverIndex = index;
-
             if (dragIndex === hoverIndex) return;
-
-            const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const hoverRect = ref.current?.getBoundingClientRect();
+            const hoverMidY = (hoverRect.bottom - hoverRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-
             if (clientOffset != null) {
-                const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
-                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
+                const hoverClientY = clientOffset.y - hoverRect.top;
+                if (dragIndex < hoverIndex && hoverClientY < hoverMidY) return;
+                if (dragIndex > hoverIndex && hoverClientY > hoverMidY) return;
             }
+
 
             moveFunc(dragIndex, hoverIndex);
             item.index = hoverIndex;
@@ -42,6 +56,7 @@ export default function ListItem({ item, index, isLocked, deleteFunc, moveFunc }
     });
 
     const [{ isDrag }, drag] = useDrag({
+
         type: 'item',
         item: () => {
             return { id, index };
@@ -50,7 +65,6 @@ export default function ListItem({ item, index, isLocked, deleteFunc, moveFunc }
             isDrag: monitor.isDragging(),
         }),
     });
-
     const opacity = isDrag ? 0 : 1;
     drag(drop(ref))
 
@@ -67,3 +81,5 @@ export default function ListItem({ item, index, isLocked, deleteFunc, moveFunc }
         </li>
     )
 }
+
+export default ListItem

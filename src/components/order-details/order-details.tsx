@@ -5,10 +5,10 @@ import style from './order-details.module.css';
 import done from '../../images/done.png';
 
 //React hooks
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 
 export default function OrderDetails() {
-	const order = useSelector((state) => state.orderReducer);
+	const order = useAppSelector((state) => state.orderReducer);
 
 	return (
 		<div className={`${style.item} pl-25 pr-25 pb-15 pt-4`}>

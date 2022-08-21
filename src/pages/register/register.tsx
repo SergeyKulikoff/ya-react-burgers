@@ -1,5 +1,5 @@
 //React-hook
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 
 //Router
 import { Link } from 'react-router-dom';
@@ -10,24 +10,22 @@ import { Logo, Input, PasswordInput, Button } from '@ya.praktikum/react-develope
 //Actions
 import { registerAction } from '../../services/actions/auth';
 
-//Redux
-import { useDispatch } from 'react-redux';
-
 //Style
 import style from './register.module.css';
+import { useAppDispatch } from '../../hooks/hooks';
 
 export const RegisterPage = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
-	const fieldChange = e => {
+	const fieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({
 			...formData,
 			[e.target.name]: e.target.value
 		})
 	};
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		dispatch(registerAction(formData))
 	};
@@ -41,6 +39,8 @@ export const RegisterPage = () => {
 					<Input name={'name'} value={formData.name} onChange={fieldChange} type={"text"} placeholder={"Имя"} />
 					<Input name={'email'} value={formData.email} onChange={fieldChange} type={"email"} placeholder={"E-mail"} />
 					<PasswordInput onChange={fieldChange} value={formData.password} name={'password'} />
+
+					{/*// @ts-ignore*/}
 					<Button type="primary" size="small">
 						<p className="text text_type_main-default">Зарегистрироваться</p>
 					</Button>

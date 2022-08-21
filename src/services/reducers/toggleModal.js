@@ -1,4 +1,4 @@
-import { CONSTRUCTOR_MODAL, INGREDIENT_MODAL } from "../constants/actionTypes";
+import { CONSTRUCTOR_MODAL } from "../constants/actionTypes";
 
 const initialState = {
 	constructorModal: false,
@@ -11,11 +11,6 @@ function isOpen(state = initialState, action) {
 			return {
 				...state,
 				constructorModal: !state.constructorModal
-			};
-		case INGREDIENT_MODAL:
-			return {
-				...state,
-				ingredientModal: !state.ingredientModal
 			};
 		default:
 			return state;

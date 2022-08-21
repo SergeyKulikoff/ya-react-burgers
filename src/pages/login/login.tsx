@@ -1,5 +1,5 @@
 //React-hook
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 
 //Router
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -15,25 +15,26 @@ import { useDispatch } from 'react-redux';
 
 //Style
 import style from './login.module.css';
+import { useAppDispatch } from '../../hooks/hooks';
 
 export const LoginPage = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	let history = useHistory();
-	const location = useLocation();
+	const location = useLocation<any>();
 
 	const [state, setState] = useState({
 		email: '',
 		password: ''
 	});
 
-	const handleChange = e => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setState({
 			...state,
 			[e.target.name]: e.target.value
 		});
 	};
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		dispatch(loginAction(state))
 			.then(() => {
@@ -63,6 +64,7 @@ export const LoginPage = () => {
 					onChange={handleChange}
 				/>
 
+				{/*// @ts-ignore*/}
 				<Button type="primary" size="small">
 					<p className="text text_type_main-default">Войти</p>
 				</Button>

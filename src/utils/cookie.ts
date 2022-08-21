@@ -1,4 +1,4 @@
-export const setCookie = (name, value, options) => {
+export const setCookie = (name: string, value: string, options?: any) => {
 	options = options || {};
 	let expires = options.expires;
 	if (typeof expires === "number" && expires) {
@@ -21,7 +21,7 @@ export const setCookie = (name, value, options) => {
 	document.cookie = updatedCookie;
 };
 
-export const delCookie = (name) => {
+export const delCookie = (name: string) => {
 	setCookie(name, '', { expires: -1 });
 };
 
@@ -35,7 +35,7 @@ export const deleteAllCookies = () => {
 	}
 };
 
-export function getCookie(name) {
+export function getCookie(name: string) {
 	const matches = document.cookie.match(
 		new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)')
 	);
