@@ -36,7 +36,7 @@ export const LoginPage = () => {
 
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
-		dispatch(loginAction(state))
+		dispatch<any>(loginAction(state))
 			.then(() => {
 				history.replace({ pathname: location.state?.from?.pathname || '/' });
 			});

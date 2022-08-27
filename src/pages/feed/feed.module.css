@@ -1,0 +1,60 @@
+.content {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+
+.feed_container {
+	width: 625px;
+	max-height: 680px;
+	overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+	background-color: #2F2F37;
+	width: 10px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #8585AD;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	max-width: 580px;
+}
+
+.wrapper{
+	display: flex;
+	justify-content: space-between;
+}
+
+.inwork,
+.status {
+	width: 45%;
+}
+
+.status{
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.statusColumn {
+	display: flex;
+	flex-flow: row wrap;
+	height: 245px;
+	overflow-x: hidden;
+}
+
+.statusNumber{
+	display: flex;
+	flex-flow: row wrap;
+	margin: 0px 0px 30px 0px;
+	width: 50%;
+}
+
+.done {
+	color: #00CCCC;
+}

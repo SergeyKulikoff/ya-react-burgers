@@ -25,7 +25,7 @@ export interface IProductListProps {
 
 const IngredientCard: FC<IProductListProps> = ({ id, image, name, type, price }) => {
     const { counts, bun } = useAppSelector(state => state.fetchData.burgerIngredients);
-    let count = (counts && counts[id] !== 'undefined') ? counts[id] : 0;
+    let count = (counts && id !== 'undefined') ? counts[id] : 0;
     count = (type === 'bun' && count && bun && id === bun.id) ? 2 : (type === 'bun' ? 0 : count);
     const location = useLocation()
 

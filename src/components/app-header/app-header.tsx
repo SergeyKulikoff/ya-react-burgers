@@ -9,8 +9,8 @@ import {
 //Style
 import style from './app-header.module.css'
 
+//Route
 import { NavLink, useLocation } from 'react-router-dom';
-
 
 export default function AppHeader() {
 	const { pathname } = useLocation();
@@ -25,17 +25,15 @@ export default function AppHeader() {
 							<p className="text text_type_main-default ml-2">Конструктор</p>
 						</NavLink>
 
-						<a href="#" className={`${style.link} ${style.active} p-4`}>
-							<ListIcon type="secondary" />
+						<NavLink exact to='/feed' className={`${style.link} ${style.active} p-4`}>
+							<ListIcon type={pathname === '/feed' ? "primary" : "secondary"} />
 							<p className={`text text_type_main-default ml-2 ${style.active}`}>Лента заказов</p>
-						</a>
+						</NavLink>
 
 						<NavLink to='/' exact={true} className={style.logo}>
 							<Logo />
 						</NavLink>
 					</div>
-
-
 
 					<NavLink to='/profile' exact={true} className={style.link}>
 						<ProfileIcon type={pathname === '/profile' ? "primary" : "secondary"} />

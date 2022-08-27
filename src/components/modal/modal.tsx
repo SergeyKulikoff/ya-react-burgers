@@ -6,9 +6,6 @@ import { FC, ReactNode, useEffect } from 'react';
 //Components
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
-//Types
-import PropTypes from 'prop-types';
-
 //Style
 import style from './modal.module.css';
 

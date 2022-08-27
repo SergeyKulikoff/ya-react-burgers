@@ -1,3 +1,5 @@
+import { _TAuthActions, _TAuthInitialState } from "./auth.types";
+
 import {
 	LOGIN,
 	REGISTER_SUCCESS,
@@ -13,7 +15,7 @@ import {
 
 import { getCookie } from "../../utils/cookie";
 
-const initialState = {
+const initialState: _TAuthInitialState = {
 	login: false,
 	authorized: !!getCookie('token'),
 	user: {
@@ -26,7 +28,7 @@ const initialState = {
 	tokenIsGood: false
 };
 
-function authReducer(state = initialState, action) {
+function authReducer(state = initialState, action: _TAuthActions): _TAuthInitialState {
 	switch (action.type) {
 		case REGISTER_SUCCESS: {
 			return {

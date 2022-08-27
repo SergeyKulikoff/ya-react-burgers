@@ -15,6 +15,8 @@ import { getUserAction, updateUserAction } from "../../services/actions/auth";
 import style from "./profile.module.css";
 import { TUser } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { ProtectedRoute } from "../../components/protected-route/protected-route";
+import { Orders } from "../../components/orders/orders";
 
 export const ProfilePage = () => {
 	const dispatch = useAppDispatch();
@@ -62,6 +64,7 @@ export const ProfilePage = () => {
 			<div className={style.profile_col}>
 				<Links />
 			</div>
+
 			<div className={style.profile_col}>
 				<Switch>
 					<Route path="/profile" exact={true}>
@@ -105,6 +108,9 @@ export const ProfilePage = () => {
 							</Button>
 						</form>
 					</Route>
+					<ProtectedRoute path="/profile/orders" exact={true}>
+						<Orders />
+					</ProtectedRoute>
 				</Switch>
 			</div>
 		</div>

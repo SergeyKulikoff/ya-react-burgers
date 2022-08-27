@@ -13,9 +13,9 @@ import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password'
 import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ProtectedRoute } from '../protected-route/protected-route';
+import { FeedPage } from '../../pages/feed/feed';
 
 //Redux
-// import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
 //React
 import { useEffect } from "react";
@@ -25,6 +25,8 @@ import { getFetchData } from "../../services/actions/ingredients";
 
 //Style
 import style from './app.module.css';
+import { OrderPage } from '../../pages/order/order';
+import { Order } from '../order/order';
 
 export default function App() {
 	const location = useLocation<any>();
@@ -70,7 +72,19 @@ export default function App() {
 					<ResetPasswordPage />
 				</Route>
 
-				<ProtectedRoute path='/profile' exact>
+				<Route path='/feed' exact={true} >
+					<FeedPage />
+				</Route>
+
+				<Route path='/feed/:id' exact={true} >
+					<OrderPage />
+				</Route>
+
+				<ProtectedRoute path='/profile/orders/:id' exact={true} >
+					<OrderPage />
+				</ProtectedRoute>
+
+				<ProtectedRoute path='/profile'>
 					<ProfilePage />
 				</ProtectedRoute>
 
@@ -89,6 +103,32 @@ export default function App() {
 							<IngredientDetails />
 						</Modal>
 					</Route>
+				</>
+			)}
+
+			{background && (
+				<>
+					<Route
+						path='/feed/:id'
+						children={
+							<Modal onClose={handleModalClose}>
+								<Order />
+							</Modal>
+						}
+					/>
+				</>
+			)}
+
+			{background && (
+				<>
+					<Route
+						path='/profile/orders/:id'
+						children={
+							<Modal onClose={handleModalClose}>
+								<Order />
+							</Modal>
+						}
+					/>
 				</>
 			)}
 		</div >

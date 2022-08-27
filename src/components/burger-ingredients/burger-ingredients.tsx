@@ -19,8 +19,6 @@ export default function BurgerIngredients() {
 	const ingredients: Array<TIngredient> = useAppSelector(state => state.fetchData.ingredient);
 	const dispatch = useAppDispatch();
 
-	console.log(ingredients)
-
 	const bun = ingredients.filter(elem => elem.type === 'bun');
 	const sauce = ingredients.filter(elem => elem.type === 'sauce');
 	const main = ingredients.filter(elem => elem.type === 'main');
@@ -36,7 +34,6 @@ export default function BurgerIngredients() {
 	}, [dispatch]);
 
 	const setTab = (tab: any) => {
-		console.log(tab);
 		setCurrent(tab)
 		const element = document.getElementById(tab);
 
