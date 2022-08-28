@@ -1,5 +1,5 @@
 //React hooks
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, SetStateAction } from "react";
 
 //Components
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -33,7 +33,7 @@ export default function BurgerIngredients() {
 
 	}, [dispatch]);
 
-	const setTab = (tab: any) => {
+	const setTab = (tab: string) => {
 		setCurrent(tab)
 		const element = document.getElementById(tab);
 

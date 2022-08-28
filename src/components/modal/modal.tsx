@@ -12,7 +12,7 @@ import style from './modal.module.css';
 const modalRoot = document.getElementById("react-modals");
 
 interface IModalProps {
-	onClose: any,
+	onClose: () => void,
 	title?: string
 	children: ReactNode
 }

@@ -1,11 +1,23 @@
-import React from 'react';
+//Style
 import css from './order.module.css';
+
+//React
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+//Hooks
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+
+//Components
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+//Types
 import { TIngredient } from '../../types';
+
+//Actions
 import { getOrder } from '../../services/actions/order';
+
+//Utils
 import { formatDate } from '../../utils/format-date';
 
 export function Order() {
@@ -81,11 +93,11 @@ export function Order() {
 				<div className={css.orderWrapper + ' pr-2'}>
 					{
 						Boolean(orderIngredients) &&
-						orderIngredients?.map((ingredient, i) => {
-							return <div key={i} className={css.order + ' mt-4 pb-2'}>
+						orderIngredients?.map(ingredient => {
+							return <div key={ingredient._id} className={css.order + ' mt-4 pb-2'}>
 								<div className={css.info}>
 									<div className={css.imageWrapper + ' mr-4'}>
-										<img className={css.image} src={ingredient.image_mobile} alt="" />
+										<img className={css.image} src={ingredient.image_mobile} alt={ingredient.name} />
 									</div>
 									<div className={css.name + ' text text_type_main-default'}>
 										{ingredient.name}

@@ -12,8 +12,8 @@ import style from './list-item.module.css';
 interface IListProps {
     item: TIngredient,
     isLocked: boolean,
-    deleteFunc: any,
-    moveFunc: any
+    deleteFunc: () => void,
+    moveFunc: (dragIndex: number, hoverIndex: number) => void,
     index: number,
 }
 

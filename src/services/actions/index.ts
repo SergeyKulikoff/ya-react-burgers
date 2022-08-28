@@ -64,19 +64,19 @@ export const sortIngredients = (hoverIndex: number, dragIndex: number): _IMoveIn
 	fromIndex: dragIndex
 })
 
-export const countDecrease = (item: any): _ICounterDecreaseAction => ({
+export const countDecrease = (item: TIngredient): _ICounterDecreaseAction => ({
 	type: COUNTER_DECREASE,
 	key: item.id,
 	typeItem: item.type
 })
 
-export const countIncrease = (item: any): _ICounterIncreaseAction => ({
+export const countIncrease = (item: TIngredient): _ICounterIncreaseAction => ({
 	type: COUNTER_INCREASE,
 	key: item.id,
 	typeItem: item.type
 })
 
-export const orderLoadAction = (orderNumber: any): _IOrderLoadAction => ({
+export const orderLoadAction = (orderNumber: number): _IOrderLoadAction => ({
 	type: ORDER_LOAD,
 	number: orderNumber
 })
@@ -154,17 +154,17 @@ export const wsConectionClose = (): _ICloseAction => ({
 	type: WS_CONNECTION_CLOSE
 })
 
-export const wsConectionSuccess = (event: WebSocketEventMap): _ISuccessAction => ({
+export const wsConectionSuccess = (event: Event): _ISuccessAction => ({
 	type: WS_CONNECTION_SUCCESS,
 	payload: event
 })
 
-export const wsConectionError = (error: WebSocketEventMap | null): _IErrorAction => ({
+export const wsConectionError = (error: Event | null): _IErrorAction => ({
 	type: WS_CONNECTION_ERROR,
 	payload: error
 })
 
-export const wsConectionClosed = (event: WebSocketEventMap): _IClosedAction => ({
+export const wsConectionClosed = (event: Event): _IClosedAction => ({
 	type: WS_CONNECTION_CLOSED,
 	payload: event
 })
@@ -184,7 +184,7 @@ export const wsSendMessage = (message: string): _ISendAction => ({
 export interface _IGetIngredientsAction { readonly type: typeof INGREDIENTS_DATA, data: TIngredient }
 
 export interface _IResetConstructorAction { readonly type: typeof RESET_CONSTRUCTOR }
-export interface _IOrderLoadAction { readonly type: typeof ORDER_LOAD, number: any }
+export interface _IOrderLoadAction { readonly type: typeof ORDER_LOAD, number: number }
 export interface _IClearOrderAction { readonly type: typeof CLEAR_ORDER }
 export interface _ICounterDecreaseAction { readonly type: typeof COUNTER_DECREASE, key: string, typeItem: string }
 export interface _ICounterIncreaseAction { readonly type: typeof COUNTER_INCREASE, key: string, typeItem: string }
@@ -243,9 +243,9 @@ export type TOrderActions =
 //Экшены WS
 export interface _IStartAction { type: typeof WS_CONNECTION_START, payload: string }
 export interface _ICloseAction { type: typeof WS_CONNECTION_CLOSE }
-export interface _ISuccessAction { type: typeof WS_CONNECTION_SUCCESS, payload: WebSocketEventMap }
-export interface _IErrorAction { type: typeof WS_CONNECTION_ERROR, payload: WebSocketEventMap | null }
-export interface _IClosedAction { type: typeof WS_CONNECTION_CLOSED, payload: WebSocketEventMap }
+export interface _ISuccessAction { type: typeof WS_CONNECTION_SUCCESS, payload: Event }
+export interface _IErrorAction { type: typeof WS_CONNECTION_ERROR, payload: Event | null }
+export interface _IClosedAction { type: typeof WS_CONNECTION_CLOSED, payload: Event }
 export interface _IGetAction { type: typeof WS_GET_MESSAGE, payload: TMessage }
 export interface _ISendAction { type: typeof WS_SEND_MESSAGE, payload: string }
 

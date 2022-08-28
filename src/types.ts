@@ -9,7 +9,7 @@ export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, never, TApplicationActions>;
 
 export type TIngredient = {
-	id: any;
+	id: string;
 	_id: string;
 	name: string;
 	type: string;
@@ -45,7 +45,7 @@ export type TOrder = {
 }
 
 export type TUser = {
-	name?: string;
+	name?: string | any;
 	email: string;
 	password: string;
 }

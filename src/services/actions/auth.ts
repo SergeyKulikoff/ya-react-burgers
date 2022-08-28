@@ -124,7 +124,7 @@ export const getUserAction = (): AppThunk => {
 	};
 };
 
-export const updateUserAction = (state: any): AppThunk => {
+export const updateUserAction = (state: TUser): AppThunk => {
 	return (dispatch: AppDispatch) => {
 		dispatch(userActionRequest());
 		updateUserRequest({

@@ -1,5 +1,4 @@
 import { SyntheticEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Logo, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './forgot-password.module.css';

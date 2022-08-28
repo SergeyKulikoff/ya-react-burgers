@@ -18,6 +18,7 @@ import { TOrder } from '../../types';
 
 //Actions
 import { wsConectionClose, wsConectionStart } from "../../services/actions";
+import { array } from 'prop-types';
 
 export function FeedPage() {
 	const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ export function FeedPage() {
 	useEffect(() => {
 		dispatch(wsConectionStart(feedsUrl));
 		return () => {
-			dispatch(wsConectionClose)
+			dispatch(wsConectionClose())
 		}
 	}, [dispatch]);
 
@@ -43,7 +44,7 @@ export function FeedPage() {
 		}
 	}, [messages]);
 
-	const splitArray = (arr: any, size: number) => arr.reduce((item: any, c: any) => {
+	const splitArray = (arr: Array<TOrder>, size: number) => arr.reduce((item: Array<TOrder[]>, c: TOrder) => {
 		if (item[item.length - 1].length === size) { item.push([]); }
 		item[item.length - 1].push(c);
 		return item;

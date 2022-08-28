@@ -51,7 +51,7 @@ export const getOrder = (id: string): AppThunk => {
 		}
 		)
 			.then(checkResponse)
-			.then((response: any) => {
+			.then(response => {
 				console.log(response);
 				dispatch(orderSuccesAction(response.orders[0]));
 				return response.data;

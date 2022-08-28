@@ -1,40 +1,43 @@
-import { Dispatch, AnyAction } from 'redux'
-import { TWSActionNames, TWSActions, wsConectionClosed, wsConectionError, wsConectionSuccess, wsGetMessage } from '../actions';
-import { WS_CONNECTION_START, WS_SEND_MESSAGE } from '../constants/actionTypes';
+import { Middleware, MiddlewareAPI } from 'redux'
+import { AppDispatch, RootState } from '../../types';
+import { TWSActionNames } from '../actions';
+import rootReducer from '../reducers/rootReducer';
+import * as wsAction from '../actions/index';
 
-export const socketMiddleware = () => {
-	return (store: { dispatch: Dispatch<TWSActions> }) => {
-		let socket: any = null;
+export const socketMiddleware = (wsActions: TWSActionNames): Middleware<{}, ReturnType<typeof rootReducer>> => {
+	return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+		let socket: WebSocket | null = null;
 
-		return (next: (i: AnyAction) => void) => (action: TWSActions) => {
+		return (next) => (action) => {
 			const { dispatch } = store;
+			const { wsConectionClosed, wsConectionError, wsConectionSuccess, wsGetMessage } = wsAction;
 
-			if (action.type === WS_CONNECTION_START) {
+			if (action.type === wsActions.WS_CONNECTION_START) {
 				socket = new WebSocket(action.payload)
 			}
 
 			if (socket) {
-				socket.onopen = (event: WebSocketEventMap) => {
+				socket.onopen = (event: Event) => {
 					dispatch(wsConectionSuccess(event))
 				};
 
-				socket.onerror = (event: WebSocketEventMap) => {
+				socket.onerror = (event: Event) => {
 					dispatch(wsConectionError(event))
 					console.log(event)
 				};
 
-				socket.onmessage = (event: WebSocketEventMap & { data: string }) => {
+				socket.onmessage = (event: Event & { data: string }) => {
 					const { data } = event;
 
 					const parsedData = JSON.parse(data);
 					dispatch(wsGetMessage(parsedData))
 				};
 
-				socket.onclose = (event: WebSocketEventMap) => {
+				socket.onclose = (event: Event) => {
 					dispatch(wsConectionClosed(event))
 				};
 
-				if (action.type === WS_SEND_MESSAGE) {
+				if (action.type === wsActions.WS_SEND_MESSAGE) {
 					const message = action.payload;
 					socket.send(JSON.stringify(message))
 				}

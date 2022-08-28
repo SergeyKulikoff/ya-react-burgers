@@ -2,15 +2,12 @@
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //Types
-import PropTypes from 'prop-types';
 import { FC } from "react";
 
 //React hooks
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../hooks/hooks";
-import { TIngredient } from "../../types";
 
 //Style
 import style from './ingredient-card.module.css';

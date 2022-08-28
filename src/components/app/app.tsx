@@ -28,8 +28,14 @@ import style from './app.module.css';
 import { OrderPage } from '../../pages/order/order';
 import { Order } from '../order/order';
 
+export interface ILocation {
+	from: Location;
+	background?: Location | any;
+	pathname: string;
+}
+
 export default function App() {
-	const location = useLocation<any>();
+	const location = useLocation<ILocation>();
 	const history = useHistory();
 	const background = location.state && location.state.background;
 

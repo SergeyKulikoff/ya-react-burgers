@@ -1,4 +1,9 @@
-export const setCookie = (name: string, value: string, options?: any) => {
+interface ICookieProps {
+	[key: string]: string | number | boolean | Date;
+}
+
+export const setCookie = (name: string, value: string, options?: ICookieProps) => {
+	console.log(options)
 	options = options || {};
 	let expires = options.expires;
 	if (typeof expires === "number" && expires) {
@@ -6,8 +11,8 @@ export const setCookie = (name: string, value: string, options?: any) => {
 		d.setTime(d.getTime() + expires * 1000);
 		expires = options.expires = d;
 	}
-	if (expires && expires.toUTCString) {
-		options.expires = expires.toUTCString();
+	if (expires && expires.toString) {
+		options.expires = expires.toString();
 	}
 	value = encodeURIComponent(value);
 	let updatedCookie = name + "=" + value;
