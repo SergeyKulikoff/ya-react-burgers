@@ -6,14 +6,15 @@ import { checkResponse } from "../../utils/api-requests";
 
 //Actions
 import { ingredientGET } from '.';
+import { AppDispatch, AppThunk } from '../../types';
 
-export const getFetchData = () => {
-	return dispatch => {
+export const getFetchData = (): AppThunk => {
+	return (dispatch: AppDispatch) => {
 		fetch(config.getIngredientsUrl)
 			.then(checkResponse)
-			.then(data => {
-				if (data?.success) return dispatch(ingredientGET(data));
-				return Promise.reject(data)
+			.then(result => {
+				if (result?.success) return dispatch(ingredientGET(result.data));
+				return Promise.reject(result)
 			})
 			.catch(error => {
 				console.log(error);

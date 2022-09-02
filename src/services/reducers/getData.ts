@@ -1,4 +1,5 @@
-import { 
+import { TIngredient } from './../../types';
+import {
     INGREDIENTS_DATA,
     INGREDIENTS_CHOOSE,
     INGREDIENT_DELETE,
@@ -7,8 +8,9 @@ import {
     MOVE_INGREDIENT,
     RESET_CONSTRUCTOR
 } from "../constants/actionTypes";
+import { TInitialState, _TActionsIngredient } from "./getData.types";
 
-const initialState = {
+const initialState: TInitialState = {
     ingredient: [],
     burgerIngredients: {
         bun: null,
@@ -17,12 +19,12 @@ const initialState = {
     },
 }
 
-function fetchData(state = initialState, action) {
+function fetchData(state = initialState, action: _TActionsIngredient): TInitialState {
     switch (action.type) {
         case INGREDIENTS_DATA:
             return {
                 ...state,
-                ingredient: action.payload.data
+                ingredient: action.data
             }
 
         case RESET_CONSTRUCTOR:
@@ -32,7 +34,8 @@ function fetchData(state = initialState, action) {
             };
 
         case INGREDIENTS_CHOOSE:
-            const item = action.payload;
+            const item = action.item;
+
             if (item.type === 'bun') {
                 return {
                     ...state,
@@ -42,7 +45,8 @@ function fetchData(state = initialState, action) {
                     }
                 };
             } else {
-                const chosenItem = { ...item, productId: action.productId}
+                const chosenItem = { ...item, productId: action.productId }
+
                 return {
                     ...state,
                     burgerIngredients: {
@@ -60,12 +64,13 @@ function fetchData(state = initialState, action) {
                 ...state,
                 burgerIngredients: {
                     ...state.burgerIngredients,
-                    contentItems: [...state.burgerIngredients.contentItems].filter((elem) => elem.productId !== action.id)
+                    contentItems: [...state.burgerIngredients.contentItems].filter((elem: TIngredient) => elem.productId !== action.id)
                 }
             };
         }
 
         case COUNTER_DECREASE: {
+
             if (action.typeItem !== 'bun') {
                 return {
                     ...state,

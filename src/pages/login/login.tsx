@@ -10,17 +10,15 @@ import { Logo, Input, Button } from '@ya.praktikum/react-developer-burger-ui-com
 //Actions
 import { loginAction } from '../../services/actions/auth';
 
-//Redux
-import { useDispatch } from 'react-redux';
-
 //Style
 import style from './login.module.css';
 import { useAppDispatch } from '../../hooks/hooks';
+import { ILocation } from '../../components/app/app';
 
 export const LoginPage = () => {
 	const dispatch = useAppDispatch();
 	let history = useHistory();
-	const location = useLocation<any>();
+	const location = useLocation<ILocation>();
 
 	const [state, setState] = useState({
 		email: '',
@@ -36,7 +34,7 @@ export const LoginPage = () => {
 
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
-		dispatch(loginAction(state))
+		dispatch<any>(loginAction(state))
 			.then(() => {
 				history.replace({ pathname: location.state?.from?.pathname || '/' });
 			});

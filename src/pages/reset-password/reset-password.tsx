@@ -49,6 +49,7 @@ export const ResetPasswordPage = () => {
 						<p className="text text_type_main-default">Сохранить</p>
 					</Button>
 				</form>
+
 				<div className={style.reset_text}>
 					<span className="text text_type_main-default text_color_inactive">Вспомнили пароль?
 						<Link to="/register" className="text text_type_main-default pl-2">Войти</Link>

@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk, TUser } from '../../types';
 import {
 	registerRequest,
 	loginRequest,
@@ -20,10 +21,10 @@ import {
 	userActionRequest,
 	userActionSucces,
 	userActionFailed,
-} from '../actions/index'
+} from './index'
 
-export const registerAction = state => {
-	return dispatch => {
+export const registerAction = (state: TUser): AppThunk => {
+	return (dispatch: AppDispatch) => {
 		registerRequest(state)
 			.then(res => {
 				if (res && res.success) {
@@ -44,8 +45,8 @@ export const registerAction = state => {
 	}
 }
 
-export const loginAction = state => {
-	return dispatch => {
+export const loginAction = (state: TUser): AppThunk => {
+	return (dispatch: AppDispatch) => {
 		return loginRequest(state)
 			.then(res => {
 				if (res && res.success) {
@@ -66,8 +67,8 @@ export const loginAction = state => {
 	};
 };
 
-export const refreshTokenAction = () => {
-	return dispatch => {
+export const refreshTokenAction = (): AppThunk => {
+	return (dispatch: AppDispatch) => {
 		dispatch(refreshTokenRequestAction());
 		refreshTokenRequest()
 			.then(res => {
@@ -88,8 +89,8 @@ export const refreshTokenAction = () => {
 	};
 }
 
-export const logoutAction = () => {
-	return dispatch => {
+export const logoutAction = (): AppThunk => {
+	return (dispatch: AppDispatch) => {
 		logoutRequest()
 			.then(res => {
 				if (res && res.success) {
@@ -105,8 +106,8 @@ export const logoutAction = () => {
 	};
 };
 
-export const getUserAction = () => {
-	return dispatch => {
+export const getUserAction = (): AppThunk => {
+	return (dispatch: AppDispatch) => {
 		dispatch(userActionRequest());
 
 		return getUserRequest(getCookie('token'))
@@ -123,8 +124,8 @@ export const getUserAction = () => {
 	};
 };
 
-export const updateUserAction = state => {
-	return dispatch => {
+export const updateUserAction = (state: TUser): AppThunk => {
+	return (dispatch: AppDispatch) => {
 		dispatch(userActionRequest());
 		updateUserRequest({
 			email: state.email,

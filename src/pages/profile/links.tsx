@@ -41,6 +41,9 @@ export function Links() {
 				{pathname === '/profile' && (
 					<p className="text text_type_main-default text_color_inactive">изменить свои персональные данные</p>
 				)}
+				{pathname === '/profile/orders' && (
+					<p className="text text_type_main-default text_color_inactive">просмотреть свою историю заказов</p>
+				)}
 			</div>
 		</nav>
 	)

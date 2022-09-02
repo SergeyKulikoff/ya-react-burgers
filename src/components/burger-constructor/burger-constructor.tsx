@@ -36,7 +36,7 @@ export default function BurgerConstructor() {
 
 	const handleCheckout = () => {
 		if (hasToken && bun) {
-			let ingredientsArr = [bun.id];
+			let ingredientsArr: Array<string> = [bun.id];
 			for (let item of contentItems) {
 				ingredientsArr.push(item.id)
 			}
@@ -45,7 +45,6 @@ export default function BurgerConstructor() {
 			dispatch(constructorShowModal());
 		} else {
 			history.replace({ pathname: '/login' })
-
 		}
 	}
 
@@ -61,7 +60,7 @@ export default function BurgerConstructor() {
 
 	const [{ canDrop }, dropTarget] = useDrop({
 		accept: "card",
-		drop(item) {
+		drop(item: TIngredient) {
 			dispatch(ingredientChoose(item));
 			dispatch(countIncrease(item));
 		},

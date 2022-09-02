@@ -1,5 +1,5 @@
 //React hooks
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, SetStateAction } from "react";
 
 //Components
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -19,8 +19,6 @@ export default function BurgerIngredients() {
 	const ingredients: Array<TIngredient> = useAppSelector(state => state.fetchData.ingredient);
 	const dispatch = useAppDispatch();
 
-	console.log(ingredients)
-
 	const bun = ingredients.filter(elem => elem.type === 'bun');
 	const sauce = ingredients.filter(elem => elem.type === 'sauce');
 	const main = ingredients.filter(elem => elem.type === 'main');
@@ -35,8 +33,7 @@ export default function BurgerIngredients() {
 
 	}, [dispatch]);
 
-	const setTab = (tab: any) => {
-		console.log(tab);
+	const setTab = (tab: string) => {
 		setCurrent(tab)
 		const element = document.getElementById(tab);
 

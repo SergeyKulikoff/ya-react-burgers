@@ -4,9 +4,6 @@ import { useState, useEffect } from 'react';
 //Router
 import { useHistory } from 'react-router-dom';
 
-//Redux
-import { useSelector } from 'react-redux';
-
 //Style
 import style from './ingredient-details.module.css'
 import { useAppSelector } from '../../hooks/hooks';
