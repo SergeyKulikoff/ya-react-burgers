@@ -43,4 +43,4 @@ npm test //для тестирования:
 npm run cypress:open //для тестирования:
 ```
 ## Адрес проекта
-https://sergeykulikoff.github.io/
+https://sergeykulikoff.github.io/ya-react-burgers/
