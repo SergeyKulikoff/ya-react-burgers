@@ -28,7 +28,7 @@ const initialState: _TAuthInitialState = {
 	tokenIsGood: false
 };
 
-function authReducer(state = initialState, action: _TAuthActions): _TAuthInitialState {
+export const authReducer = (state = initialState, action: _TAuthActions): _TAuthInitialState => {
 	switch (action.type) {
 		case REGISTER_SUCCESS: {
 			return {
@@ -136,4 +136,3 @@ function authReducer(state = initialState, action: _TAuthActions): _TAuthInitial
 	}
 }
 
-export default authReducer;
