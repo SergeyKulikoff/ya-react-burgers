@@ -14,7 +14,7 @@ export default function OrderDetails() {
 		return (
 			<div className={`${style.item} pl-25 pr-25 pb-15 pt-4`}>
 				<div className={style.about}>
-					<h1>{order.number}</h1>
+					<h1 className='ordernumber'>{order.number}</h1>
 					<p className={`${style.text} mt-8 mb-15`}>
 						идентификатор заказа
 					</p>

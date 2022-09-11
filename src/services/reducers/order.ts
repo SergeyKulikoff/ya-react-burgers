@@ -8,7 +8,7 @@ const initialState: _TOrderState = {
     orderFailed: false,
 };
 
-function orderReducer(state = initialState, action: _TOrderActions): _TOrderState {
+export const orderReducer = (state = initialState, action: _TOrderActions): _TOrderState => {
     switch (action.type) {
         case ORDER_LOAD:
             return {
@@ -53,5 +53,3 @@ function orderReducer(state = initialState, action: _TOrderActions): _TOrderStat
         }
     }
 }
-
-export default orderReducer;

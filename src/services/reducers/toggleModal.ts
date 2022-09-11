@@ -5,7 +5,7 @@ const initialState: _TInitialModalState = {
 	constructorModal: false
 };
 
-function isOpen(state = initialState, action: _IShowAction): _TInitialModalState {
+export const isOpen = (state = initialState, action: _IShowAction): _TInitialModalState => {
 	switch (action.type) {
 		case CONSTRUCTOR_MODAL:
 			return {
@@ -16,5 +16,3 @@ function isOpen(state = initialState, action: _IShowAction): _TInitialModalState
 			return state;
 	}
 }
-
-export default isOpen;

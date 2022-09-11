@@ -19,7 +19,7 @@ const initialState: TInitialState = {
     },
 }
 
-function fetchData(state = initialState, action: _TActionsIngredient): TInitialState {
+export const fetchData = (state = initialState, action: _TActionsIngredient): TInitialState => {
     switch (action.type) {
         case INGREDIENTS_DATA:
             return {
@@ -120,4 +120,3 @@ function fetchData(state = initialState, action: _TActionsIngredient): TInitialS
             return state
     }
 }
-export default fetchData;

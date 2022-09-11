@@ -243,9 +243,9 @@ export type TOrderActions =
 //Экшены WS
 export interface _IStartAction { type: typeof WS_CONNECTION_START, payload: string }
 export interface _ICloseAction { type: typeof WS_CONNECTION_CLOSE }
-export interface _ISuccessAction { type: typeof WS_CONNECTION_SUCCESS, payload: Event }
+export interface _ISuccessAction { type: typeof WS_CONNECTION_SUCCESS, payload?: Event }
 export interface _IErrorAction { type: typeof WS_CONNECTION_ERROR, payload: Event | null }
-export interface _IClosedAction { type: typeof WS_CONNECTION_CLOSED, payload: Event }
+export interface _IClosedAction { type: typeof WS_CONNECTION_CLOSED, payload?: Event }
 export interface _IGetAction { type: typeof WS_GET_MESSAGE, payload: TMessage }
 export interface _ISendAction { type: typeof WS_SEND_MESSAGE, payload: string }
 
